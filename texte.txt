@@ -1,0 +1,2 @@
+Le patient prend un médicament.
+Le médecin prescrit un traitement.
