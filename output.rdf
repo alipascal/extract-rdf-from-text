@@ -1,0 +1,11 @@
+@prefix ns1: <http://example.org/> .
+
+ns1:Marie ns1:découvrir "polonium" .
+
+ns1:médecin ns1:prescrire "traitement" .
+
+ns1:patient ns1:prendre "médicament" .
+
+ns1:roman ns1:ecritPar "Agatha_Christie" ;
+    ns1:estUn "Le_Crime_de_l_Orient_Express" .
+

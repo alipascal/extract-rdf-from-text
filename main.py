@@ -21,7 +21,7 @@ def extractEntities(text):
     entities = [
         ("Marie", "découvrir", "polonium"),
         ("roman", "estUn", "Le Crime de l Orient Express"),
-        ("roman", "ecritPar", "Agatha_Christie"),
+        ("roman", "ecritPar", "Agatha Christie"),
         ("médecin", "prescrire", "traitement"),
         ("patient", "prendre", "médicament"),
     ]
