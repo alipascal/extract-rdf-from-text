@@ -62,5 +62,3 @@ if __name__ == '__main__':
         graph.add(node)
     graph.serialize(destination="output.rdf", format="turtle")
     # pour visualiser le graphe : https://www.ldf.fi/service/rdf-grapher 
-
-    
