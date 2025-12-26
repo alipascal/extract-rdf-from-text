@@ -4,17 +4,26 @@ Projet universitaire - Extraction des entités à partir de texte et transformat
 
 ## Installation du projet pour le développment
 
-Création de l'evironement
+Création de l'evironement, Activation et désactivation de l'environement, sur Windows :
 ```bash
 python -m venv venv
 ```
-
-Activation et désactivation de l'environement
 ```bash
-.\venv\Scripts\activate # windoaws
+.\venv\Scripts\activate
 ```
 ```bash
-deactivate # windoaws
+deactivate
+```
+
+Création de l'evironement, Activation et désactivation de l'environement, sur Linux :
+```bash
+
+```
+```bash
+
+```
+```bash
+
 ```
 
 Installation des dépendances python :
