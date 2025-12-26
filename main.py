@@ -7,7 +7,7 @@ from rdflib import Graph, URIRef, Literal, Namespace
 
 
 EX = Namespace("http://example.org/")
-def createNode(subj, verb, obj):
+def createRDFNode(subj, verb, obj):
     return URIRef(EX[subj]), URIRef(EX[verb]), Literal(obj)
 
 
@@ -16,7 +16,7 @@ def cleanEntity(subj, verb, obj):
     return subj.replace(" ", "_"), verb.replace(" ", "_"), obj.replace(" ", "_")
 
 
-def extractEntities(text):
+def extractTriplets(text):
     # TODO
     entities = [
         ("Marie", "découvrir", "polonium"),
@@ -29,7 +29,7 @@ def extractEntities(text):
 
 
 nlp = spacy.load("fr_core_news_sm")
-def text_to_triplet_spacy(text):
+def extractTriplets_spacy(text):
     # test SpaCy
     triplets = []
     doc = nlp(text)
@@ -55,10 +55,10 @@ if __name__ == '__main__':
     # Text to RDF graph
     graph = Graph()
     text = "None"
-    entities = extractEntities(text)
+    entities = extractTriplets(text)
     for subj, verb, obj in entities:
         subj, verb, obj = cleanEntity(subj, verb, obj)
-        node = createNode(subj, verb, obj)
+        node = createRDFNode(subj, verb, obj)
         graph.add(node)
     graph.serialize(destination="output.rdf", format="turtle")
     # pour visualiser le graphe : https://www.ldf.fi/service/rdf-grapher 
