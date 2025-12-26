@@ -5,7 +5,7 @@ Code chatGPT test pour trouver l'inspiration
 import spacy
 from rdflib import Graph, URIRef, Literal, Namespace
 
-nlp = spacy.load("fr_core_news_sm")
+nlp = spacy.load("fr_core_news_lg")
 
 EX = Namespace("http://example.org/")
 
@@ -38,12 +38,12 @@ def text_to_rdf(text):
 
 
 # Test
-text = "Le patient prend un médicament. Le médecin prescrit un traitement." 
+# text = "Le patient prend un médicament. Le médecin prescrit un traitement." 
 # text = "Marie Curie a découvert le polonium."
 # text = "Le Crime de l'Orient Express est un roman écrit par Agatha Christie." # erreur
 # text = "Le Crime de l'Orient Express est un roman. Le roman a été écrit par Agatha Christie." # erreur
 # text = "Le Crime est un roman. Le roman a été écrit par Agatha Christie." # erreur
-# text = "Le Crime est un roman. Agatha Christie écrit un roman." # incomplet
+text = "Le Crime est un roman. Agatha Christie écrit un roman." # incomplet
 
 rdf_graph = text_to_rdf(text)
 
