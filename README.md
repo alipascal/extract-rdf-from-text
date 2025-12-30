@@ -31,7 +31,17 @@ Installation des dépendances python :
 pip install -r .\requirements.txt
 ```
 
+### Utilisation de SpaCy
+
 Installation du model SpaCy multi-langue avant le lancement du programme :
 ```bash
 python -m spacy download xx_ent_wiki_sm
+```
+
+### Utilisation de API OpenAI (chatGPT)
+
+Créer un fichier ``.env`` contenant la clé API secrète :
+```.env
+# dans le fichier .env
+OPENAI_API_KEY=sk-XXX
 ```
