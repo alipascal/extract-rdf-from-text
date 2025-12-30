@@ -43,6 +43,8 @@ Désinstalltion du model si besoin :
 pip uninstall xx_ent_wiki_sm
 ``` 
 
+Documentations SpaCy : https://spacy.io/models/fr/#fr_core_news_sm
+
 ### Utilisation de API OpenAI (chatGPT)
 
 Créer un fichier ``.env`` contenant la clé API secrète :

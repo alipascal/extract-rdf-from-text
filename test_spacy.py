@@ -3,10 +3,6 @@ Code chatGPT test pour trouver l'inspiration
 """
 
 import spacy
-from rdflib import Graph, URIRef, Literal, Namespace
-
-
-EX = Namespace("http://example.org/")
 
 
 def print_info_token(token):
@@ -26,7 +22,7 @@ def print_info_token(token):
     IS STOP     : {token.is_stop}
     IS PUNCT    : {token.is_punct}
     LIKE NUM    : {token.like_num}
-    
+
     ------------------------------------------
     """)
 
@@ -56,13 +52,14 @@ def extractTriplets_spacy(text):
     return triplets
 
 
-# Test
-# text = "Le patient prend un médicament. Le médecin prescrit un traitement." 
-# text = "Marie Curie a découvert le polonium."
-text = "Le Crime de l'Orient Express est un roman écrit par Agatha Christie." # erreur
-# text = "Le Crime de l'Orient Express est un roman. Le roman a été écrit par Agatha Christie." # erreur
-# text = "Le Crime est un roman. Le roman a été écrit par Agatha Christie." # erreur
-# text = "Le Crime est un roman. Agatha Christie écrit un roman." # incomplet
+if __name__ == '__main__':
+    # Test
+    # text = "Le patient prend un médicament. Le médecin prescrit un traitement." 
+    # text = "Marie Curie a découvert le polonium."
+    text = "Le Crime de l'Orient Express est un roman écrit par Agatha Christie." # erreur
+    # text = "Le Crime de l'Orient Express est un roman. Le roman a été écrit par Agatha Christie." # erreur
+    # text = "Le Crime est un roman. Le roman a été écrit par Agatha Christie." # erreur
+    # text = "Le Crime est un roman. Agatha Christie écrit un roman." # incomplet
 
-entities = extractTriplets_spacy(text)
-print(entities)
+    entities = extractTriplets_spacy(text)
+    print(entities)
