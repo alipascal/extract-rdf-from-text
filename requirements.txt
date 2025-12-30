@@ -1,3 +1,4 @@
 rdflib
 spacy
 openai
+python-dotenv # load .env file

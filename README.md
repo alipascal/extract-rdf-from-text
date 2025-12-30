@@ -4,7 +4,7 @@ Projet universitaire - Extraction des entités à partir de texte et transformat
 
 ## Installation du projet pour le développment
 
-Création de l'evironement, Activation et désactivation de l'environement, sur Windows :
+Création de l'environement, Activation et désactivation de l'environement, sur Windows :
 ```bash
 python -m venv venv
 ```
@@ -15,7 +15,7 @@ python -m venv venv
 deactivate
 ```
 
-Création de l'evironement, Activation et désactivation de l'environement, sur Linux :
+Création de l'environement, Activation et désactivation de l'environement, sur Linux :
 ```bash
 
 ```
@@ -28,7 +28,7 @@ Création de l'evironement, Activation et désactivation de l'environement, sur 
 
 Installation des dépendances python :
 ```bash
-pip install -r .\requirements.txt
+pip install -r requirements.txt
 ```
 
 ### Utilisation de SpaCy
@@ -38,10 +38,14 @@ Installation du model SpaCy multi-langue avant le lancement du programme :
 python -m spacy download xx_ent_wiki_sm
 ```
 
+Désinstalltion du model si besoin :
+```bash
+pip uninstall xx_ent_wiki_sm
+``` 
+
 ### Utilisation de API OpenAI (chatGPT)
 
 Créer un fichier ``.env`` contenant la clé API secrète :
 ```.env
-# dans le fichier .env
 OPENAI_API_KEY=sk-XXX
 ```

@@ -11,19 +11,26 @@ def createRDFNode(subj, verb, obj):
     return URIRef(EX[subj]), URIRef(EX[verb]), Literal(obj)
 
 
+import re
 def cleanEntity(subj, verb, obj):
-    # TODO
-    return subj.replace(" ", "_"), verb.replace(" ", "_"), obj.replace(" ", "_")
+
+    def clean(text):
+        text = re.sub(r'[^\x20-\x7E]', '', text)
+        return text.replace(" ", "_")
+    
+    return clean(subj), clean(verb), clean(obj)
 
 
 def extractTriplets(text):
     # TODO
     entities = [
-        ("Marie", "découvrir", "polonium"),
+        ("Marie Curie", "découvrir", "polonium"),
         ("roman", "estUn", "Le Crime de l Orient Express"),
         ("roman", "ecritPar", "Agatha Christie"),
         ("médecin", "prescrire", "traitement"),
         ("patient", "prendre", "médicament"),
+        ("Le Crime de l'Orient Express", "est", "roman"),
+        ("Le Crime de l'Orient Express", "a été écrit par", "Agatha Christie")
     ]
     return entities
 
