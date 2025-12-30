@@ -1,28 +1,34 @@
 """
 Testing Function Calling avec OpenAI models
 """
-from dotenv import load_dotenv
 import os
+from dotenv import load_dotenv
+import json
 
 from openai import OpenAI
 
 
-# Load the .env file
-load_dotenv()
-# Get API key from environment variable
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+def dict_to_list(d:dict) -> list:
+  result = [
+    (t["subject"], t["predicate"], t["object"]) for t in d["triplets"]
+  ]
+  return result
 
 
 def extractTriplets_openai(text):
+    # Load the .env file
+    load_dotenv()
+    # Get API key from environment variable
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
     functions = [
       {
-        "name": "extract_triples",
-        "description": "Extraire des triplets (sujet, prédicat, objet) depuis un texte. Utiliser le nom générique sans article si possible",
+        "name": "extract_triplets",
+        "description": "Extraire des triplets (sujet, prédicat, objet) depuis un texte. Utiliser le nom générique sans article si possible. Passer les verbes et prédicat au présent.",
         "parameters": {
           "type": "object",
           "properties": {
-            "triples": {
+            "triplets": {
               "type": "array",
               "items": {
                 "type": "object",
@@ -35,7 +41,7 @@ def extractTriplets_openai(text):
               }
             }
           },
-          "required": ["triples"]
+          "required": ["triplets"]
         }
       }
     ]
@@ -51,31 +57,30 @@ def extractTriplets_openai(text):
             }
         ],
         functions=functions,
-        function_call={"name": "extract_triples"}
+        function_call={"name": "extract_triplets"}
     )
 
-    triples = response.choices[0].message.function_call.arguments
-    
-    def dict_to_list(d:dict) -> list:
-      result = [
-        (t["subject"], t["predicate"], t["object"]) for t in d["triples"]
-      ]
-      return result
+    triplets = response.choices[0].message.function_call.arguments
+    triplets = json.loads(triplets)
+    print(triplets)
 
-    entities = dict_to_list(triples)
+    entities = dict_to_list(triplets)
     
     return entities
 
 
-# Test Input
-text = "Le Crime de l'Orient Express est un roman. Le roman a été écrit par Agatha Christie."
-# text = "Le patient prend un médicament. Le médecin prescrit un traitement." 
-# text = "Marie Curie a découvert le polonium."
 
+if __name__ == '__main__':
+  # Test Input
+  # text = "Le Crime de l'Orient Express est un roman écrit par Agatha Christie."
+  # text = "Le Crime de l'Orient Express est un roman. Le roman a été écrit par Agatha Christie."
+  # text = "Le patient prend un médicament." 
+  text = "Le médecin prescrit un traitement."
+  # text = "Marie Curie a découvert le polonium."
 
-# triples = {"triples":[{"subject":"Le Crime de l'Orient Express","predicate":"est","object":"un roman"},{"subject":"Le roman","predicate":"a été écrit par","object":"Agatha Christie"}]}
-triples = {"triples":[{"subject":"Crime de l'Orient Express","predicate":"est","object":"roman"},{"subject":"roman","predicate":"a été écrit par","object":"Agatha Christie"}]}
-
-print(triples)
-
+  triplets = extractTriplets_openai(text)
+  # triplets = {"triplets":[{"subject":"Crime de l'Orient Express","predicate":"est","object":"roman"},{"subject":"Roman","predicate":"est écrit par","object":"Agatha Christie"}]}
+  # triplets = {'triplets': [{'subject': 'médecin', 'predicate': 'prescrit', 'object': 'traitement'}]}
+  
+  print(triplets)
 
