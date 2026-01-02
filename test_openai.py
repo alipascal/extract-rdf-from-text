@@ -24,7 +24,7 @@ def extractTriplets_openai(text):
     functions = [
       {
         "name": "extract_triplets",
-        "description": "Extraire des triplets (sujet, prédicat, objet) depuis un texte. Utiliser le nom générique sans article si possible. Passer les verbes et prédicat au présent.",
+        "description": "Extraire le ou les triplets (sujet, prédicat, objet) depuis un texte. Utiliser le nom générique sans article si possible. Passer les verbes et prédicat au présent.",
         "parameters": {
           "type": "object",
           "properties": {
@@ -75,8 +75,9 @@ if __name__ == '__main__':
   # text = "Le Crime de l'Orient Express est un roman écrit par Agatha Christie."
   # text = "Le Crime de l'Orient Express est un roman. Le roman a été écrit par Agatha Christie."
   # text = "Le patient prend un médicament." 
-  text = "Le médecin prescrit un traitement."
+  # text = "Le médecin prescrit un traitement."
   # text = "Marie Curie a découvert le polonium."
+  text = "Pierre affirme qu'il possède dans les rayons de sa bibliothèque le roman d'Agatha Christie, intitulé “Le Crime de l'Orient Express”." # erreur (mais exemple hyper compliquer)
 
   triplets = extractTriplets_openai(text)
   # triplets = {"triplets":[{"subject":"Crime de l'Orient Express","predicate":"est","object":"roman"},{"subject":"Roman","predicate":"est écrit par","object":"Agatha Christie"}]}

@@ -60,6 +60,7 @@ if __name__ == '__main__':
     # text = "Le Crime de l'Orient Express est un roman. Le roman a été écrit par Agatha Christie." # erreur
     # text = "Le Crime est un roman. Le roman a été écrit par Agatha Christie." # erreur
     # text = "Le Crime est un roman. Agatha Christie écrit un roman." # incomplet
+    # text = "Pierre affirme qu'il possède dans les rayons de sa bibliothèque le roman d'Agatha Christie, intitulé “Le Crime de l'Orient Express”."
 
     entities = extractTriplets_spacy(text)
     print(entities)
