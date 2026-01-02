@@ -60,5 +60,5 @@ if __name__ == '__main__':
         subj, verb, obj = cleanEntity(subj, verb, obj)
         node = createNode(subj, verb, obj)
         graph.add(node)
-    graph.serialize(destination="output.rdf", format="turtle")
+    graph.serialize(destination="output.rdf", format="xml")
     # pour visualiser le graphe : https://www.ldf.fi/service/rdf-grapher 
