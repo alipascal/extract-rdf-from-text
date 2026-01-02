@@ -1,5 +1,5 @@
 """
-Testing Function Calling avec OpenAI models
+Function Calling avec OpenAI models
 """
 import os
 from dotenv import load_dotenv

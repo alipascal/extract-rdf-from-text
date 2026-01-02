@@ -2,7 +2,6 @@
 Code Test - Inspirer de code /test1.py
 """
 
-import spacy
 from rdflib import Graph, URIRef, Literal, Namespace
 
 import re
@@ -32,6 +31,7 @@ def cleanEntity(subj, verb, obj):
     return subj, verb, obj
 
 
+
 def extractTriplets(text):
     # TODO
     entities = [
@@ -46,34 +46,19 @@ def extractTriplets(text):
     return entities
 
 
-nlp = spacy.load("fr_core_news_sm")
-def extractTriplets_spacy(text):
-    # test SpaCy
-    triplets = []
-    doc = nlp(text)
 
-    for sent in doc.sents:
-        subj, verb, obj = None, None, None
+def getFichier(nom_fichier):
+    # code de jospeh 
+    # traite input.txt
+    return "None"
 
-        for token in sent:
-            if token.dep_ == "nsubj":
-                subj = token.text
-            if token.pos_ == "VERB":
-                verb = token.lemma_
-            if token.dep_ in ("obj", "obl"):
-                obj = token.text
-
-        if subj and verb and obj:
-            triplets.append((subj, verb, obj))
-            
-    return triplets
 
 
 if __name__ == '__main__':
     # Text to RDF graph
     graph = Graph()
-    text = "None"
-    # Traiter le text phrase par phrase
+    text = getFichier("nom_du_fichier")
+    # Traiter le texte phrase par phrase
     for sentence in text.split("."):
         if sentence == "":
             continue
@@ -84,3 +69,5 @@ if __name__ == '__main__':
             graph.add(node)
     graph.serialize(destination="output.ttl", format="turtle")
     # pour visualiser le graphe : https://www.ldf.fi/service/rdf-grapher 
+
+
