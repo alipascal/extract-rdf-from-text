@@ -5,14 +5,15 @@ Code Test - Inspirer de code /test1.py
 import spacy
 from rdflib import Graph, URIRef, Literal, Namespace
 
+import re
+import unicodedata
+
 
 EX = Namespace("http://example.org/")
 def createRDFNode(subj, verb, obj):
     return URIRef(EX[subj]), URIRef(EX[verb]), Literal(obj)
 
 
-import re
-import unicodedata
 def cleanEntity(subj, verb, obj):
     
     def clean(text):
