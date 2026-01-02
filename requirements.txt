@@ -1,5 +1,11 @@
+# Génération graphsRDF
 rdflib
+
+# Models 
+nltk
 spacy
 openai
+
+# autres
 python-dotenv # load .env file
-nltk
+numpy # pour nltk

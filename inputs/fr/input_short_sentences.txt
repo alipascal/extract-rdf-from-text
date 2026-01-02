@@ -1,0 +1,5 @@
+Le patient prend un médicament.
+Le médecin prescrit un traitement.
+Marie Curie a découvert le polonium.
+Le Crime de l'Orient Express est un roman.
+Le roman a été écrit par Agatha Christie.

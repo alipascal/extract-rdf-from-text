@@ -45,6 +45,22 @@ pip uninstall xx_ent_wiki_sm
 
 Documentations SpaCy : https://spacy.io/models/fr/#fr_core_news_sm
 
+### Utilisation de NLTK
+
+```python
+import nltk
+nltk.download('punkt_tab')
+nltk.download('averaged_perceptron_tagger_eng')
+nltk.download('maxent_ne_chunker_tab')
+nltk.download('words')
+```
+
+*OU*
+
+```python
+nltk.download('all')
+```
+
 ### Utilisation de API OpenAI (chatGPT)
 
 Créer un fichier ``.env`` contenant la clé API secrète :

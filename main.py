@@ -1,11 +1,17 @@
 """
 Code Test - Inspirer de code /test1.py
 """
-
-from rdflib import Graph, URIRef, Literal, Namespace
+import argparse
 
 import re
 import unicodedata
+
+from rdflib import Graph, URIRef, Literal, Namespace
+
+from models.code_openai import extractTriplets_openai
+from models.code_spacy import RDFTripleExtractor
+from models.pipeline_nltk import extractTriplets_nltk
+from models.pipeline_stanford import extractTriplets_stanford
 
 
 EX = Namespace("http://example.org/")
@@ -16,10 +22,13 @@ def createRDFNode(subj, verb, obj):
 def cleanEntity(subj, verb, obj):
     
     def clean(text):
+        # Retirer les caractère spéciaux
         text = re.sub(r'[^A-Za-z0-9 ]+', '', text)
         return text.replace(" ", "_")
     
     def remove_accents(text):
+        # Retirer les accents
+        # TODO marche pas
         return ''.join(
             c for c in unicodedata.normalize('NFD', text)
             if unicodedata.category(c) != 'Mn'
@@ -32,8 +41,8 @@ def cleanEntity(subj, verb, obj):
 
 
 
-def extractTriplets(text):
-    # TODO
+def extractTriplets(text:str) -> list:
+    # Exemple
     entities = [
         ("Marie Curie", "découvrir", "polonium"),
         ("roman", "estUn", "Le Crime de l Orient Express"),
@@ -46,28 +55,53 @@ def extractTriplets(text):
     return entities
 
 
+def extractTriplets_spacy(text):
+    extractor = RDFTripleExtractor(lang="fr")
+    triplets = extractor.process_text(text)
+    return triplets
 
-def getFichier(nom_fichier):
-    # code de jospeh 
-    # traite input.txt
-    return "None"
+
+def getFile(namefile) -> str:
+    content = ""
+    file = open(namefile, "r", encoding="utf-8")
+    for line in file:
+        content += line
+    file.close()
+    return content
 
 
 
 if __name__ == '__main__':
     # Text to RDF graph
-    graph = Graph()
-    text = getFichier("nom_du_fichier")
-    # Traiter le texte phrase par phrase
-    for sentence in text.split("."):
-        if sentence == "":
-            continue
-        entities = extractTriplets(sentence)
-        for subj, verb, obj in entities:
-            subj, verb, obj = cleanEntity(subj, verb, obj)
-            node = createRDFNode(subj, verb, obj)
-            graph.add(node)
-    graph.serialize(destination="output.ttl", format="turtle")
-    # pour visualiser le graphe : https://www.ldf.fi/service/rdf-grapher 
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument("mode", choices=["spacy", "nltk", "stanford", "openai"])
+    parser.add_argument("--file", default="input.txt")
+    args = parser.parse_args()
+
+
+    ACTIONS = {
+        "spacy": extractTriplets_spacy,
+        "nltk": extractTriplets_nltk,
+        "stanford": extractTriplets_stanford,
+        "openai": extractTriplets_openai,
+    }
+
+    method = args.mode
+    namefile = args.file
+    text = getFile(namefile)
+    print(f"[-] Exécution algorithme {method}")
+    entities = ACTIONS[method](text)
+    print(f"✓ Exécution algorithme {method} terminée")
+    
+    graph = Graph()
+    for subj, verb, obj in entities:
+        subj, verb, obj = cleanEntity(subj, verb, obj)
+        node = createRDFNode(subj, verb, obj)
+        graph.add(node)
+    graph.serialize(destination="output.ttl", format="turtle")
+    graph.serialize(destination="output.rdf", format="xml")
+    print("✓ Fichier output créé")
+    # pour visualiser le graphe : https://www.ldf.fi/service/rdf-grapher 
+    # rdf_to_graphviz("output.ttl")
 

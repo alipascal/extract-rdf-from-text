@@ -1,0 +1,6 @@
+@prefix ex: <http://example.org/> .
+
+ex:California a ex:Place .
+
+ex:Google a ex:Organization .
+

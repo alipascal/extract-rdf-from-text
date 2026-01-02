@@ -46,6 +46,12 @@ def extractTriplets_openai(text):
     }
   ]
 
+  # TODO traiter phrase par phrases (même si ça marche sans)
+  # Traiter le texte phrase par phrase
+  # for sentence in text.split("."):
+  #     if sentence == "":
+  #         continue
+
   client = OpenAI(api_key=OPENAI_API_KEY)
 
   response = client.chat.completions.create(
@@ -62,7 +68,7 @@ def extractTriplets_openai(text):
 
   triplets = response.choices[0].message.function_call.arguments
   triplets = json.loads(triplets)
-  print(triplets)
+  # print(triplets)
 
   entities = dict_to_list(triplets)
   
