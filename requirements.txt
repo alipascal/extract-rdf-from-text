@@ -1,11 +1,11 @@
 # Génération graphsRDF
-rdflib
+rdflib==7.5.0
 
 # Models 
-nltk
-spacy
-openai
+nltk==3.9.2
+spacy==3.8.11
+openai==2.14.0
 
 # autres
-python-dotenv # load .env file
-numpy # pour nltk
+python-dotenv==1.2.1 # pour load .env file
+numpy==2.4.0 # pour nltk
