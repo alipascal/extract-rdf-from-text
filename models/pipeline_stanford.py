@@ -72,7 +72,7 @@ def process_text(text):
 
 
 
-def extractTriplets_stanford(text):
+def extractTriplets_stanford(text:str, lang="en") -> list:
     entities = []
     # Traiter le texte phrase par phrase
     for sentence in text.split("."):

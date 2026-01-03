@@ -86,12 +86,12 @@ if __name__ == '__main__':
         "example": extractTriplets_example,
     }
 
-
+    lang = "fr"
     method = args.model
     namefile = args.file
     text = getFile(namefile)
     print(f"¤ Exécution algorithme '{method}'")
-    entities = ACTIONS[method](text)
+    entities = ACTIONS[method](text, lang)
     print(f"✓ Exécution algorithme '{method}' terminée")
     
     graph = Graph()

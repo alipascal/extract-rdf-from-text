@@ -15,15 +15,15 @@ def dict_to_list(d:dict) -> list:
   return result
 
 
-def extractTriplets_openai(text:str, lang="en") -> list:
+def extractTriplets_openai(text:str, lang="fr") -> list:
   # Load the .env file
   load_dotenv()
   # Get API key from environment variable
   OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
   prompt = {
-    "fr": "Extraire le ou les triplets (sujet, prédicat, objet) depuis un texte. Utiliser le nom générique sans article ('le', 'la', 'un', 'une') si possible. Mettre les verbes et prédicats au présent. Éviter les doublons.",
-    "en": "Extract the triplet(s) (subject, predicate, object) from the text. Use the generic noun form without any article ('a', 'an', 'the'). Convert verbs in present tense. Avoid duplicates."
+    "fr": "Extraire un triplet ou plusieurs (sujet, prédicat, objet) depuis un texte. Utiliser le nom générique sans article ('le', 'la', 'un', 'une') si possible. Mettre les verbes et prédicats au présent.",
+    "en": "Extract a triplet or more (subject, predicate, object) from the text. Use the generic noun form without any article ('a', 'an', 'the'). Convert verbs in present tense."
   }
 
   functions = [
@@ -64,7 +64,7 @@ def extractTriplets_openai(text:str, lang="en") -> list:
         messages=[
             {
                 "role": "user",
-                "content": f"Extrais tous les triplets du texte suivant : {text}"
+                "content": f"{text}"
             }
         ],
         functions=functions,

@@ -93,7 +93,7 @@ def process_text(text):
     return relations
 
 
-def extractTriplets_nltk(text):
+def extractTriplets_nltk(text:str, lang="en") -> list:
     entities = []
     # Traiter le texte phrase par phrase
     for sentence in text.split("."):
