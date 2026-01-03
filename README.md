@@ -13,31 +13,23 @@ Les corpus proviennent d'articles scientifiques, de comptes rendus médicaux, d'
 Toutes les sources sont référencées dans les fichiers correspondants.
 
 
-## Installation du projet pour le développment
+## Installation & Setup projet pour le développment
 
-Création, activation et désactivation de l'environement virtuel, sur Windows :
+Environement virtuel sur Windows :
 ```bash
-python -m venv venv
-```
-```bash
-.\venv\Scripts\activate
-```
-```bash
-deactivate
+python -m venv venv # création
+.\venv\Scripts\activate # activation
+deactivate # désactivation
 ```
 
-Création, activation et désactivation de l’environnement virtuel, sur Linux :
+Environnement virtuel sur Linux :
 ```bash
-python3 -m venv venv
-```
-```bash
-source venv/bin/activate
-```
-```bash
-deactivate
+python3 -m venv venv # création
+source venv/bin/activate # activation
+deactivate # désactivation
 ```
 
-Installation des dépendances python :
+Installation des dépendances Python lorsque la ``venv`` est activée :
 ```bash
 pip install -r requirements.txt
 ```
@@ -78,7 +70,7 @@ python -c "import nltk; nltk.download('punkt_tab'); nltk.download('averaged_perc
 
 ### Utilisation de API OpenAI (chatGPT)
 
-Créer et ajouter dans le fichier ``.env`` contenant la clé API secrète :
+Créer et ajouter dans le fichier ``.env`` une clé API secrète OpenAI :
 ```.env
 OPENAI_API_KEY=sk-XXX
 ```
@@ -86,10 +78,40 @@ OPENAI_API_KEY=sk-XXX
 
 ### Utilisation & Installation de CoreNLP
 
-Pour utiliser CoreNLP Stanford, il faut télécharger le modèle depuis le site officel : https://stanfordnlp.github.io/CoreNLP/
+Pour utiliser CoreNLP Stanford, il faut télécharger le modèle au format `.zip` depuis le site officel : https://stanfordnlp.github.io/CoreNLP/
 
 Ensuite, ajouter dans le fichier ``.env`` le chemin absolu vers le dossier de CoreNLP, comme dans l'exemple ci-dessous :
 
 ```.env
 STANFORD_DIR=C:\...\...\stanford-corenlp-4.5.10
 ```
+
+
+## Lancement de l’application
+
+Le programme s’exécute depuis l’invite de commande.
+
+**Arguments :**
+
+* `model` : le modèle à utiliser (`spacy`, `nltk`, `stanford`, `openai`)
+* `--file` : fichier d’entrée (par défaut `input.txt`)
+* `--lang` : langue du fichier d’entrée (`fr` ou `en`, par défaut `fr`)
+
+```bash
+python main.py <model> --lang <fr/en> --file input.txt
+```
+
+Le programme génère :
+* un fichier `.rdf` au format XML
+* un fichier `.ttl` au format Turtle
+
+!!! Les modèles NLTK et Stanford CoreNLP traitent uniquement les textes en anglais.
+
+**Exemples d'utilisation :**
+
+```bash
+python main.py spacy --lang fr # SpaCy français sur le fichier par défaut
+python main.py nltk --file mon_fichier.txt # NLTK sur un fichier spécifique
+python main.py openai # OpenAI
+```
+
