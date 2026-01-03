@@ -1,11 +1,21 @@
-@prefix ns1: <http://example.org/> .
-
-ns1:Marie ns1:découvrir "polonium" .
-
-ns1:médecin ns1:prescrire "traitement" .
-
-ns1:patient ns1:prendre "médicament" .
-
-ns1:roman ns1:ecritPar "Agatha_Christie" ;
-    ns1:estUn "Le_Crime_de_l_Orient_Express" .
-
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:ns1="http://example.org/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <rdf:Description rdf:about="http://example.org/patient">
+    <ns1:prendre rdf:resource="médicament"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/chiffre_d'_affaires">
+    <ns1:atteindre rdf:resource="50_millions_de_dollars"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/TechCorp">
+    <ns1:signer rdf:resource="partenariat"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/médecin">
+    <ns1:prescrire rdf:resource="traitement"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/président_Emmanuel_Macron">
+    <ns1:rencontrer rdf:resource="chancelier_allemand"/>
+  </rdf:Description>
+</rdf:RDF>

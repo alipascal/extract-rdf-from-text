@@ -1,9 +1,10 @@
 import spacy
-from rdflib import Graph, Namespace
+from rdflib import Graph, Namespace, URIRef
 import networkx as nx
 import matplotlib.pyplot as plt
 from typing import List, Dict
 import re
+import unicodedata
 
 
 class RDFTripleExtractor:
@@ -112,14 +113,54 @@ def read_text_file(path: str) -> str:
     with open(path, "r", encoding="utf-8") as f:
         return f.read()
 
-# Exemple d'utilisation
-# if __name__ == "__main__":
-#     # Choisir langue "fr" ou "en"
-#     extractor = RDFTripleExtractor(lang="fr")
-    
-#     text = read_text_file("texte.txt")
+# EX = Namespace("http://example.org/")
+# def normalize(text: str) -> str:
+#     return (
+#         text.strip()
+#         .lower()
+#         .replace(" ", "_")
+#         .replace("'", "")
+#     )
 
-#     triplets = extractor.process_text(text)
-#     print(triplets)
-#     extractor.print_triplets(triplets)
+
+# def createNode(subj, verb, obj):
+#     return URIRef(EX[normalize(subj)]), URIRef(EX[normalize(verb)]), URIRef(EX[normalize(obj)])
+# def cleanEntity(subj, verb, obj):
+#     # TODO
+#     return subj.replace(" ", "_"), verb.replace(" ", "_"), obj.replace(" ", "_")
+
+# from rdflib import RDF
+
+# def addTriple(graph, subj, verb, obj):
+#     s, p, o = createNode(subj, verb, obj)
+
+#     graph.add((s, RDF.type, EX.Entity))
+#     graph.add((o, RDF.type, EX.Entity))
+#     graph.add((p, RDF.type, RDF.Property))
+
+#     graph.add((s, p, o))
+
+EX = Namespace("http://example.org/")
+def createNode(subj, verb, obj):
+    return URIRef(EX[subj]), URIRef(EX[verb]), URIRef(obj)
+
+
+def cleanEntity(subj, verb, obj):
+    # TODO
+    return subj.replace(" ", "_"), verb.replace(" ", "_"), obj.replace(" ", "_")
+
+# Exemple d'utilisation
+if __name__ == "__main__":
+    # Choisir langue "fr" ou "en"
+    extractor = RDFTripleExtractor(lang="fr")
+    
+    graph = Graph()
+    text = read_text_file("texte.txt")
+    entities = extractor.process_text(text)
+    print(entities)
+    for subj, verb, obj in entities:
+        subj, verb, obj = cleanEntity(subj, verb, obj)
+        node = createNode(subj, verb, obj)
+        graph.add(node)
+    graph.serialize(destination="output.rdf", format="xml")
 

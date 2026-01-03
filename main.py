@@ -8,7 +8,7 @@ from rdflib import Graph, URIRef, Literal, Namespace
 
 EX = Namespace("http://example.org/")
 def createNode(subj, verb, obj):
-    return URIRef(EX[subj]), URIRef(EX[verb]), Literal(obj)
+    return URIRef(EX[subj]), URIRef(EX[verb]), URIRef(obj)
 
 
 def cleanEntity(subj, verb, obj):
