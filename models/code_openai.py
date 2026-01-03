@@ -15,16 +15,21 @@ def dict_to_list(d:dict) -> list:
   return result
 
 
-def extractTriplets_openai(text):
+def extractTriplets_openai(text:str, lang="en") -> list:
   # Load the .env file
   load_dotenv()
   # Get API key from environment variable
   OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
+  prompt = {
+    "fr": "Extraire le ou les triplets (sujet, prédicat, objet) depuis un texte. Utiliser le nom générique sans article ('le', 'la', 'un', 'une') si possible. Mettre les verbes et prédicats au présent. Éviter les doublons.",
+    "en": "Extract the triplet(s) (subject, predicate, object) from the text. Use the generic noun form without any article ('a', 'an', 'the'). Convert verbs in present tense. Avoid duplicates."
+  }
+
   functions = [
     {
       "name": "extract_triplets",
-      "description": "Extraire le ou les triplets (sujet, prédicat, objet) depuis un texte. Utiliser le nom générique sans article si possible. Passer les verbes et prédicat au présent.",
+      "description": prompt[lang],
       "parameters": {
         "type": "object",
         "properties": {
@@ -46,31 +51,32 @@ def extractTriplets_openai(text):
     }
   ]
 
-  # TODO traiter phrase par phrases (même si ça marche sans)
-  # Traiter le texte phrase par phrase
-  # for sentence in text.split("."):
-  #     if sentence == "":
-  #         continue
-
+  entities = []
   client = OpenAI(api_key=OPENAI_API_KEY)
 
-  response = client.chat.completions.create(
-      model="gpt-5-nano", # fais gaffe change ps le model sinon ça va coûter plus cher pour moi ;-;
-      messages=[
-          {
-              "role": "user",
-              "content": f"Extrais tous les triplets du texte suivant : {text}"
-          }
-      ],
-      functions=functions,
-      function_call={"name": "extract_triplets"}
-  )
-
-  triplets = response.choices[0].message.function_call.arguments
-  triplets = json.loads(triplets)
-  # print(triplets)
-
-  entities = dict_to_list(triplets)
+  print("¤ Exécution des requêtes API OpenAI")
+  # Traiter le texte phrase par phrase
+  for sentence in text.split("."):
+    if sentence == "":
+        continue
+    response = client.chat.completions.create(
+        model="gpt-5-nano", # fais gaffe change ps le model sinon ça va coûter plus cher pour moi ;-;
+        messages=[
+            {
+                "role": "user",
+                "content": f"Extrais tous les triplets du texte suivant : {text}"
+            }
+        ],
+        functions=functions,
+        function_call={"name": "extract_triplets"}
+    )
+    triplets = response.choices[0].message.function_call.arguments
+    triplets = json.loads(triplets)
+    # print(triplets)
+    temp = dict_to_list(triplets)
+    entities.extend(temp)
+  
+  print("✓ Exécution des requêtes API OpenAI terminée")
   
   return entities
 
