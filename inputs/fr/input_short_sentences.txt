@@ -1,5 +1,15 @@
-Le patient prend un médicament.
-Le médecin prescrit un traitement.
+La société TechCorp a été fondée en 2010 par Alice Johnson.
+L'entreprise est basée à San Francisco et développe des solutions d'IA.
+Bob Smith est le PDG actuel. 
+TechCorp a signé un partenariat avec Google.
+Le chiffre d'affaires atteint 50 millions de dollars.
+Marie Dubois travaille à l'hôpital Saint-Louis à Paris.
+Elle est médecin spécialisée en cardiologie.
+Pierre Martin est son collègue et dirige le service.
+Le président Emmanuel Macron a rencontré le chancelier allemand.
+La réunion s'est tenue à l'Élysée. Les deux dirigeants ont discuté de la politique européenne et du changement climatique.
 Marie Curie a découvert le polonium.
 Le Crime de l'Orient Express est un roman.
 Le roman a été écrit par Agatha Christie.
+Le patient prend un médicament.
+Le médecin prescrit un traitement.

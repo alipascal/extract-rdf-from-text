@@ -1,4 +1,15 @@
-Agatha Christie wrote the novel Murder on the Orient Express.
-Google is located in California.
-Barack Obama was born in Hawaii.
-The patient has diabetes.
+TechCorp was founded in 2010 by Alice Johnson.
+The company is based in San Francisco and develops AI solutions.
+Bob Smith is the current CEO.
+TechCorp has signed a partnership with Google.
+Revenue has reached 50 million dollars.
+Marie Dubois works at Saint-Louis Hospital in Paris.
+She is a physician specializing in cardiology.
+Pierre Martin is her colleague and heads the department.
+President Emmanuel Macron met with the German chancellor.
+The meeting was held at the Élysée Palace. The two leaders discussed European policy and climate change.
+Marie Curie discovered polonium.
+*Murder on the Orient Express* is a novel.
+The novel was written by Agatha Christie.
+The patient is taking a medication.
+The doctor prescribes a treatment.
