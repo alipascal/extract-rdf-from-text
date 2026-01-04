@@ -22,8 +22,8 @@ def extractTriplets_openai(text:str, lang="fr") -> list:
   OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
   prompt = {
-    "fr": "Extraire un triplet ou plusieurs (sujet, prédicat, objet) depuis un texte. Utiliser le nom générique sans article ('le', 'la', 'un', 'une') si possible. Mettre les verbes et prédicats au présent.",
-    "en": "Extract a triplet or more (subject, predicate, object) from the text. Use the generic noun form without any article ('a', 'an', 'the'). Convert verbs in present tense."
+    "fr": "Extraire un triplet ou plusieurs (sujet, prédicat, objet) depuis un texte. Utiliser le nom générique sans article ('le', 'la', 'un', 'une') si possible. Mettre les verbes et prédicats au présent. Ne pas créer de variations multiples pour le même verbe ou le même nom. Fusionner les informations similaires.",
+    "en": "Extract a triplet or more (subject, predicate, object) from the text. Use the generic noun form without any article ('a', 'an', 'the'). Convert verbs in present tense. Do not create multiple variations for the same verb or the same noun. Merge similar information."
   }
 
   functions = [
@@ -56,25 +56,26 @@ def extractTriplets_openai(text:str, lang="fr") -> list:
 
   print("¤ Exécution des requêtes API OpenAI")
   # Traiter le texte phrase par phrase
-  for sentence in text.split("."):
-    if sentence == "":
-        continue
-    response = client.chat.completions.create(
-        model="gpt-5-nano", # fais gaffe change ps le model sinon ça va coûter plus cher pour moi ;-;
-        messages=[
-            {
-                "role": "user",
-                "content": f"{text}"
-            }
-        ],
-        functions=functions,
-        function_call={"name": "extract_triplets"}
-    )
-    triplets = response.choices[0].message.function_call.arguments
-    triplets = json.loads(triplets)
-    # print(triplets)
-    temp = dict_to_list(triplets)
-    entities.extend(temp)
+  # for sentence in text.split("."):
+  #   if sentence == "":
+  #       continue
+  
+  response = client.chat.completions.create(
+      model="gpt-5-nano", # fais gaffe change ps le model sinon ça va coûter plus cher pour moi ;-;
+      messages=[
+          {
+              "role": "user",
+              "content": f"{text}"
+          }
+      ],
+      functions=functions,
+      function_call={"name": "extract_triplets"}
+  )
+  triplets = response.choices[0].message.function_call.arguments
+  triplets = json.loads(triplets)
+  # print(triplets)
+  temp = dict_to_list(triplets)
+  entities.extend(temp)
   
   print("✓ Exécution des requêtes API OpenAI terminée")
   

@@ -1,5 +1,6 @@
 # Génération graphsRDF
 rdflib==7.5.0
+pyvis # vizualisation
 
 # Models 
 nltk==3.9.2

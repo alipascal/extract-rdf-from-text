@@ -3,25 +3,24 @@ import json
 import os
 import tempfile
 
+
 from dotenv import load_dotenv 
 
 load_dotenv()
 STANFORD_DIR = os.getenv("STANFORD_DIR")
 
 
-def process_text(text):
-    """
-    Pipeline complet Stanford :
-    entrée : texte brut
-    sortie : liste de tuples (sujet, relation, objet)
-    """
 
-    # fichier temporaire
+def process_texts(texts):
+
+    # -------- 1. Un seul fichier texte --------
+    full_text = "\n".join(texts)
+
     with tempfile.NamedTemporaryFile(delete=False, suffix=".txt", mode="w", encoding="utf-8") as f:
-        f.write(text)
+        f.write(full_text)
         input_file = f.name
 
-    # commande Stanford
+    # -------- 2. Commande Stanford --------
     cmd = [
         "java", "-mx4g", "-cp", "*",
         "edu.stanford.nlp.pipeline.StanfordCoreNLP",
@@ -30,61 +29,56 @@ def process_text(text):
         "-outputFormat", "json"
     ]
 
-    # exécution
     subprocess.run(cmd, cwd=STANFORD_DIR, stdout=subprocess.DEVNULL)
 
-    # lecture du résultat
+    # -------- 3. Lecture du JSON UNIQUE --------
     output_file = os.path.basename(input_file) + ".json"
 
     with open(os.path.join(STANFORD_DIR, output_file), encoding="utf-8") as f:
         data = json.load(f)
 
+    relations = set()
 
-    relations = []
 
+    # -------- 4. Parcours des phrases --------
     for sentence in data["sentences"]:
+
         entities = {}
 
-        # ---------- ÉTAPE 4 : NER ----------
+        # --- NER ---
         for token in sentence["tokens"]:
             if token["ner"] != "O":
                 entities[token["index"]] = token["word"]
 
-        # ---------- ÉTAPE 5 : RELATIONS ----------
+        # --- Relations ---
         for dep in sentence["basicDependencies"]:
-            if dep["dep"] in ["nsubj", "nsubjpass"]:
+            if dep["dep"].startswith("nsubj"):
                 verb = dep["governorGloss"]
                 subj_idx = dep["dependent"]
 
-                # chercher un objet
                 for d in sentence["basicDependencies"]:
-                    if d["governor"] == dep["governor"] and d["dep"] in ["dobj", "nmod", "obl"]:
+                    if d["governor"] == dep["governor"] and d["dep"].startswith(("obj", "obl")):
                         obj_idx = d["dependent"]
 
                         if subj_idx in entities and obj_idx in entities:
-                            relations.append((
+                            relations.add((
                                 entities[subj_idx],
                                 verb.lower(),
                                 entities[obj_idx]
                             ))
 
-    return relations
+    return list(relations)
 
 
-
-def extractTriplets_stanford(text:str, lang="en") -> list:
-    entities = []
-    # Traiter le texte phrase par phrase
-    for sentence in text.split("."):
-        if sentence == "":
-            continue
-        entities.extend(process_text(sentence))
-    return entities
-
+def extractTriplets_stanford(text:str, lang="en"):
+    assert lang == "en", "Langue doit être anglais ('en')"
+    list_text = text.split(".")[:-1]
+    print(list_text)
+    return process_texts(list_text)
 
 
 # =========================
-# MAIN (TEST)
+# MAIN
 # =========================
 if __name__ == "__main__":
 
@@ -95,6 +89,8 @@ if __name__ == "__main__":
         "The patient has diabetes."
     ]
 
-    for t in texts:
-        print("\nTexte :", t)
-        print("Relations :", process_text(t))
+    results = process_texts(texts)
+
+    print("\nRelations extraites (JSON unique) :")
+    for r in results:
+        print(r)

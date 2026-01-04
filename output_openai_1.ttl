@@ -1,0 +1,33 @@
+@prefix ns1: <http://example.org/> .
+
+ns1:Bob_Smith ns1:is <CEO> .
+
+ns1:Emmanuel_Macron ns1:discusses <European_policy>,
+        <climate_change> ;
+    ns1:meets <German_chancellor> .
+
+ns1:Marie_Curie ns1:discovered <polonium> .
+
+ns1:Marie_Dubois ns1:is <physician> ;
+    ns1:specializesin <cardiology> ;
+    ns1:worksat <SaintLouis_Hospital_in_Paris> .
+
+ns1:Murder_on_the_Orient_Express ns1:is <novel> ;
+    ns1:writtenby <Agatha_Christie> .
+
+ns1:Pierre_Martin ns1:heads <department> ;
+    ns1:is <colleague> .
+
+ns1:Revenue ns1:reaches <50_million_dollars> .
+
+ns1:TechCorp ns1:basedin <San_Francisco> ;
+    ns1:develops <AI_solutions> ;
+    ns1:founded <2010> ;
+    ns1:signs <partnership_with_Google> .
+
+ns1:The_doctor ns1:prescribes <treatment> .
+
+ns1:The_meeting ns1:isheldat <Elysee_Palace> .
+
+ns1:The_patient ns1:takes <medication> .
+

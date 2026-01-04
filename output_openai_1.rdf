@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:ns1="http://example.org/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <rdf:Description rdf:about="http://example.org/Murder_on_the_Orient_Express">
+    <ns1:is rdf:resource="novel"/>
+    <ns1:writtenby rdf:resource="Agatha_Christie"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/Marie_Dubois">
+    <ns1:worksat rdf:resource="SaintLouis_Hospital_in_Paris"/>
+    <ns1:is rdf:resource="physician"/>
+    <ns1:specializesin rdf:resource="cardiology"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/Pierre_Martin">
+    <ns1:is rdf:resource="colleague"/>
+    <ns1:heads rdf:resource="department"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/TechCorp">
+    <ns1:founded rdf:resource="2010"/>
+    <ns1:basedin rdf:resource="San_Francisco"/>
+    <ns1:develops rdf:resource="AI_solutions"/>
+    <ns1:signs rdf:resource="partnership_with_Google"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/The_meeting">
+    <ns1:isheldat rdf:resource="Elysee_Palace"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/Emmanuel_Macron">
+    <ns1:meets rdf:resource="German_chancellor"/>
+    <ns1:discusses rdf:resource="European_policy"/>
+    <ns1:discusses rdf:resource="climate_change"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/The_patient">
+    <ns1:takes rdf:resource="medication"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/Marie_Curie">
+    <ns1:discovered rdf:resource="polonium"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/The_doctor">
+    <ns1:prescribes rdf:resource="treatment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/Bob_Smith">
+    <ns1:is rdf:resource="CEO"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/Revenue">
+    <ns1:reaches rdf:resource="50_million_dollars"/>
+  </rdf:Description>
+</rdf:RDF>

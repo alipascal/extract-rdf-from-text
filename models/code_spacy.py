@@ -23,19 +23,14 @@ class RDFTripleExtractor:
         print("Chargement de spaCy...")
         try:
             if self.lang == "fr":
-                self.nlp = spacy.load("fr_core_news_sm")
+                self.nlp = spacy.load("fr_core_news_lg")
                 print("✓ Modèle français chargé")
             else:
-                self.nlp = spacy.load("en_core_web_sm")
+                self.nlp = spacy.load("en_core_web_lg")
                 print("✓ Modèle anglais chargé")
         except Exception as e:
             print(" Veuillez installer le modèle spaCy requis.")
             raise e
-
-        # Initialiser graphe RDF
-        self.rdf_graph = Graph()
-        self.ex = Namespace("http://example.com/")
-        self.rdf_graph.bind("ex", self.ex)
 
         print("✓ Système d'extraction initialisé")
 
@@ -59,12 +54,17 @@ class RDFTripleExtractor:
                 if token.dep_ in ("obj", "attr", "dobj", "pobj", "obl"):
                     obj = " ".join([t.text for t in token.subtree])
 
-            if subject and predicate and obj:
+
+
+            if subject and predicate and obj :
+                subject = self._clean_text(subject)
+                obj = self._clean_text(obj)
+                
                 triplets.append((
-                    self._clean_text(subject), predicate,self._clean_text(obj)
+                    subject, predicate, obj
                 ))
 
-        return triplets
+        return triplets    
 
     def _clean_text(self, text: str) -> str:
         """Nettoie le texte (articles, ponctuation excessive)"""
@@ -74,8 +74,8 @@ class RDFTripleExtractor:
         else:
             text = re.sub(r"^(the|a|an)\s+", "", text, flags=re.IGNORECASE)
         # Enlever ponctuation finale
-        text = re.sub(r"[,;.!?]+$", "", text)
-        return text.strip()
+        text = re.sub(r"[,;.!?]+$", "", text).strip()
+        return text
 
     def process_text(self, text: str) -> List[Dict]:
         """Pipeline complet d'extraction"""

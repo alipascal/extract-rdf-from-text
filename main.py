@@ -7,6 +7,7 @@ import re
 import unicodedata
 
 from rdflib import Graph, URIRef, Literal, Namespace
+from grapghviz import visualize_rdf
 
 from models.code_openai import extractTriplets_openai
 from models.code_spacy import RDFTripleExtractor
@@ -16,7 +17,7 @@ from models.pipeline_stanford import extractTriplets_stanford
 
 EX = Namespace("http://example.org/")
 def createRDFNode(subj, verb, obj):
-    return URIRef(EX[subj]), URIRef(EX[verb]), Literal(obj)
+    return URIRef(EX[subj]), URIRef(EX[verb]), URIRef(obj)
 
 
 def cleanEntity(subj, verb, obj):
@@ -53,8 +54,8 @@ def extractTriplets_example(text:str) -> list:
     return entities
 
 
-def extractTriplets_spacy(text:str) -> list:
-    extractor = RDFTripleExtractor(lang="fr")
+def extractTriplets_spacy(text:str, lang:str) -> list:
+    extractor = RDFTripleExtractor(lang)
     triplets = extractor.process_text(text)
     return triplets
 
@@ -70,13 +71,15 @@ def getFile(namefile:str) -> str:
 
 
 if __name__ == '__main__':
+
     # Text to RDF graph
 
     parser = argparse.ArgumentParser()
     parser.add_argument("model", choices=["spacy", "nltk", "stanford", "openai"])
     parser.add_argument("--file", default="input.txt")
+    parser.add_argument("--lang", default="en", choices=["fr", "en"])
+    parser.add_argument("--output", default="output")
     args = parser.parse_args()
-
 
     ACTIONS = {
         "spacy": extractTriplets_spacy,
@@ -86,21 +89,32 @@ if __name__ == '__main__':
         "example": extractTriplets_example,
     }
 
-    lang = "fr"
+    lang = args.lang
     method = args.model
     namefile = args.file
+    outputfile = args.output
+
+    print(f"¤ Exécution algorithme '{method}' {lang}")
     text = getFile(namefile)
-    print(f"¤ Exécution algorithme '{method}'")
     entities = ACTIONS[method](text, lang)
     print(f"✓ Exécution algorithme '{method}' terminée")
+
+    print(f"✓ {len(entities)} triplets générés")
     
+    print(f"¤ Création du graphe", end="")
     graph = Graph()
     for subj, verb, obj in entities:
         subj, verb, obj = cleanEntity(subj, verb, obj)
-        node = createRDFNode(subj, verb, obj)
+        if subj and verb and obj :
+            node = createRDFNode(subj, verb, obj)
         graph.add(node)
-    graph.serialize(destination="output.ttl", format="turtle")
-    graph.serialize(destination="output.rdf", format="xml")
-    print("✓ Fichier output créé")
-    # pour visualiser le graphe : https://www.ldf.fi/service/rdf-grapher 
+    print(f"\r✓ Création du graphe terminée")
+
+    graph.serialize(destination=outputfile+".ttl", format="turtle")
+    graph.serialize(destination=outputfile+".rdf", format="xml")
+    print(f"✓ Fichiers créé : {outputfile}.ttl, {outputfile}.rdf")
+    # pour visualiser le graphe : https://www.ldf.fi/service/rdf-grapher
+
+    filerdf = f"{outputfile}.rdf"
+    visualize_rdf(filerdf, f"{outputfile}_graph.html")
 
