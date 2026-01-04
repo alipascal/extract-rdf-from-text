@@ -5,6 +5,7 @@ import argparse
 
 import re
 import unicodedata
+import webbrowser
 
 from rdflib import Graph, URIRef, Literal, Namespace
 from grapghviz import visualize_rdf
@@ -117,4 +118,5 @@ if __name__ == '__main__':
 
     filerdf = f"{outputfile}.rdf"
     visualize_rdf(filerdf, f"{outputfile}_graph.html")
+    webbrowser.open(f"{outputfile}_graph.html")
 
