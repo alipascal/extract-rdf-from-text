@@ -72,8 +72,8 @@ def process_texts(texts):
 
 def extractTriplets_stanford(text:str, lang="en"):
     assert lang == "en", "Langue doit être anglais ('en')"
+    # On crée une liste de phrases
     list_text = text.split(".")[:-1]
-    print(list_text)
     return process_texts(list_text)
 
 
