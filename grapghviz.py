@@ -153,5 +153,5 @@ def visualize_rdf_png(rdf_file, output="graph.png"):
     print(f"✅ PNG généré : {output}")
 
 if __name__ == "__main__":
-    visualize_rdf("output.rdf")
-    visualize_rdf_png("output.rdf", output="graph.png")
+    visualize_rdf("output1.rdf")
+    visualize_rdf_png("output1.rdf", output="graph.png")

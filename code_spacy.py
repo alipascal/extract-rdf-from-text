@@ -1,5 +1,5 @@
 import spacy
-from rdflib import Graph, Namespace, URIRef
+from rdflib import Graph, Literal, Namespace, URIRef
 import networkx as nx
 import matplotlib.pyplot as plt
 from typing import List, Dict
@@ -142,7 +142,7 @@ def read_text_file(path: str) -> str:
 
 EX = Namespace("http://example.org/")
 def createNode(subj, verb, obj):
-    return URIRef(EX[subj]), URIRef(EX[verb]), URIRef(obj)
+    return URIRef(EX[subj]), URIRef(EX[verb]), Literal(obj)
 
 
 def cleanEntity(subj, verb, obj):
@@ -162,5 +162,5 @@ if __name__ == "__main__":
         subj, verb, obj = cleanEntity(subj, verb, obj)
         node = createNode(subj, verb, obj)
         graph.add(node)
-    graph.serialize(destination="output.rdf", format="xml")
+    graph.serialize(destination="output1.rdf", format="xml")
 

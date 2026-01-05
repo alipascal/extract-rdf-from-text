@@ -3,19 +3,138 @@
    xmlns:ns1="http://example.org/"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 >
-  <rdf:Description rdf:about="http://example.org/patient">
-    <ns1:prendre rdf:resource="médicament"/>
+  <rdf:Description rdf:about="http://example.org/qui">
+    <ns1:situer>astre</ns1:situer>
+    <ns1:dilater>leur_energie_d_autres_reactions_nucleaires</ns1:dilater>
+    <ns1:posseder>Lune__qui_s_est_formee_peu_apres_elle</ns1:posseder>
+    <ns1:posseder>de_mers</ns1:posseder>
+    <ns1:apparaitre>au_moins_35_milliards_d_annees</ns1:apparaitre>
+    <ns1:pouvoir>magnitude_apparente</ns1:pouvoir>
+    <ns1:balayer>celle</ns1:balayer>
+    <ns1:faire>plus_de_similitudes_avec_celui_de_notre_planete</ns1:faire>
+    <ns1:devoir>mecanique_celeste_qui_n_en_sont_que_des_domaines_particuliers</ns1:devoir>
+    <ns1:venir>loi_des_astres</ns1:venir>
+    <ns1:rendre>la</ns1:rendre>
+    <ns1:mariner>planete</ns1:mariner>
+    <ns1:connaitre>chaleur_superieure_a_celle_recue_du_Soleil</ns1:connaitre>
+    <ns1:observer>l</ns1:observer>
+    <ns1:visiter>survol_le_24_janvier_1986</ns1:visiter>
+    <ns1:marquer>espaces_entre_les_hautes_terres_claires_et_ses_crateres_d_impact_proeminents</ns1:marquer>
+    <ns1:permettre>connaissance_geologique_de_la_Lune</ns1:permettre>
   </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/chiffre_d'_affaires">
-    <ns1:atteindre rdf:resource="50_millions_de_dollars"/>
+  <rdf:Description rdf:about="http://example.org/Mars">
+    <ns1:posseder>deux_petits_satellites_naturels__Phobos_et_Deimos</ns1:posseder>
   </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/TechCorp">
-    <ns1:signer rdf:resource="partenariat"/>
+  <rdf:Description rdf:about="http://example.org/elle">
+    <ns1:comprendre>68671_jours_ou_188_annee_terrestre</ns1:comprendre>
+    <ns1:reste>soit_a_l_ouest_juste_apres_le_crepuscule</ns1:reste>
+    <ns1:impliquer>le</ns1:impliquer>
+    <ns1:pratiquemer>impression_qu_elle__roule__sur_son_orbite__du_moins_a_un_certain_moment_de_sa_revolution</ns1:pratiquemer>
   </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/médecin">
-    <ns1:prescrire rdf:resource="traitement"/>
+  <rdf:Description rdf:about="http://example.org/dont_les_vents_violents">
+    <ns1:separer>600_km__h</ns1:separer>
   </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/président_Emmanuel_Macron">
-    <ns1:rencontrer rdf:resource="chancelier_allemand"/>
+  <rdf:Description rdf:about="http://example.org/planete">
+    <ns1:impliquer>important_champ_magnetique</ns1:impliquer>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/il">
+    <ns1:agir>satellites_planetaires</ns1:agir>
+    <ns1:designer>satellites_naturels_des_planetes__planetes_naines_et_petits_corps</ns1:designer>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/on">
+    <ns1:permettre>amorce_et_le_maintien_de_ces_reactions_nucleaires</ns1:permettre>
+    <ns1:posseder>13_anneaux_etroits_et_29_lunesref</ns1:posseder>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/astrophysique">
+    <ns1:consister>les</ns1:consister>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/interaction_gravitationnelle">
+    <ns1:creer>sa_vitesse_de_rotation</ns1:creer>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ci">
+    <ns1:utiliser>tres_longue_pose</ns1:utiliser>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/interieur_de_la_planete">
+    <ns1:contenir>proportion_plus_elevee_de__glaces__au_sens_de_l_astrophysique</ns1:contenir>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nous">
+    <ns1:apporter>existence_d_une_epoque_reculee</ns1:apporter>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/Homme">
+    <ns1:faire>mouvements</ns1:faire>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/Venus">
+    <ns1:posseder>orbite_la_plus_circulaire_des_planetes_du_Systeme_solaire_avec_une_excentricite_orbitale_presque_nulle_et__du_fait_de_sa_lente_rotation</ns1:posseder>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/Seules_deux_sondes_spatiales">
+    <ns1:etudier>Mercure</ns1:etudier>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/astronomie_moderne">
+    <ns1:devoir>son_developpement_a_celui_des_mathematiques_depuis_l_Antiquite_grecque_et_a_l_invention_d_instruments_d_observation_a_la_fin_du_Moyen_Age</ns1:devoir>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/Elle">
+    <ns1:prendre>sa_source</ns1:prendre>
+    <ns1:appeler>_planete_sur__de_la_Terre_en_raison_des_similitudes_relatives_de_leurs_diametre__masse__proximite_au_Soleil_et_composition</ns1:appeler>
+    <ns1:devoir>son_nom</ns1:devoir>
+    <ns1:avoir>composition_similaire_au_Soleil__constituee_principalement_d_hydrogene_mais_aussi_d_helium_pour_un_quart_de_sa_masse_et_un_dixieme_de_son_volume</ns1:avoir>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/images_de_la_sonde_spatiale">
+    <ns1:montrer>planete_presque_sans_relief_a_la_lumiere_visible</ns1:montrer>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/la_ou_les_rayons_du_Soleil">
+    <ns1:engendrer>temperatures_en_surface_allant_de_90_K__183__C_</ns1:engendrer>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/terme">
+    <ns1:pouvoir>centre_galactique</ns1:pouvoir>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/Soleil">
+    <ns1:representer>seul_environ_99854__de_la_masse_du_systeme_planetaire</ns1:representer>
+    <ns1:posseder>rotation_retrograde_et_tourne</ns1:posseder>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/orbiteur_Juno">
+    <ns1:mettre>sa_mission</ns1:mettre>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/astrologie">
+    <ns1:pratiquer>distinction_entre_la_raison_et_la_foi</ns1:pratiquer>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/topographie_de_Venus">
+    <ns1:presente>peu_de_reliefs_eleves</ns1:presente>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/premieres_cartes_detaillees">
+    <ns1:realiser>observation_de_sa_surface_en_lumiere_visible</ns1:realiser>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/systeme">
+    <ns1:comprendre>que_ceux_de_Saturne</ns1:comprendre>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/Uranus">
+    <ns1:permettre>changement_saisonnier__une_activite_meteorologique_accrue_et_des_vents_de_l_ordre_de_250_m__s_alors_qu</ns1:permettre>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/Mercure">
+    <ns1:avoir>sa_periode_de_rotation</ns1:avoir>
+    <ns1:donner>son_nom</ns1:donner>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/plupart_des_universites">
+    <ns1:avoir>interet_pour_ce_domaine</ns1:avoir>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/Terre">
+    <ns1:former>454_milliards_d_annees</ns1:former>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/biodiversite">
+    <ns1:connaitre>de_longues_periodes_d_expansion_occasionnellement_ponctuees_par_des_extinctions_massives</ns1:connaitre>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/planete_Mercure">
+    <ns1:devoir>son_nom</ns1:devoir>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/plupart_des_autres_planetes">
+    <ns1:trouver>leur_equateur</ns1:trouver>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/son_etude">
+    <ns1:donner>tres_faible_taille_apparente</ns1:donner>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/Jupiter">
+    <ns1:posseder>de_surface_solide_bien_definie_mais_plutot_un_vaste_manteau_d_hydrogene_metallique</ns1:posseder>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/Lune">
+    <ns1:pouvoir>apparition_d_eclipses_solaires_totales</ns1:pouvoir>
   </rdf:Description>
 </rdf:RDF>

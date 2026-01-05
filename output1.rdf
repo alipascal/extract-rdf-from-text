@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:ns1="http://example.org/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <rdf:Description rdf:about="http://example.org/TechCorp">
+    <ns1:signer>partenariat</ns1:signer>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/président_Emmanuel_Macron">
+    <ns1:rencontrer>chancelier_allemand</ns1:rencontrer>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/médecin">
+    <ns1:prescrire>traitement</ns1:prescrire>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/chiffre_d'_affaires">
+    <ns1:atteindre>50_millions_de_dollars</ns1:atteindre>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/patient">
+    <ns1:prendre>médicament</ns1:prendre>
+  </rdf:Description>
+</rdf:RDF>
