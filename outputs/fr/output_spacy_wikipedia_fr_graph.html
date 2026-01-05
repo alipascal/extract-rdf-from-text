@@ -1,0 +1,222 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 100vh;
+                 background-color: #1e1e1e;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 100vh;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#4CAF50", "font": {"color": "white"}, "id": "hautement reflechissants", "label": "hautement reflechissants", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "visible  empechant lobservation visuelle de sa surface depuis lespace", "label": "visible  empechant lobservation visuelle de sa surface depuis lespace", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "temps normal  il designe les satellites naturels des planetes", "label": "temps normal  il designe les satellites naturels des planetes", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "naines et petits corps", "label": "naines et petits corps", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Le terme  astre  est proche  mais est rarement utilise en astronomie", "label": "Le terme  astre  est proche  mais est rarement utilise en astronomie", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "ou les nebuleuses", "label": "ou les nebuleuses", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "h le long de leurs", "label": "h le long de leurs", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "interactives", "label": "interactives", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "se", "label": "se", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "mars", "label": "mars", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Lastronomie est peut  etre la plus ancienne des sciences  comme semblent lindiquer nombre de decouvertes", "label": "Lastronomie est peut  etre la plus ancienne des sciences  comme semblent lindiquer nombre de decouvertes", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "datant de lage du bronze et du Neolithique", "label": "datant de lage du bronze et du Neolithique", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "par reactions de fusion nucleaire  ou des corps qui ont ete dans cet etat a un stade de leur cycle de vie  comme les naines", "label": "par reactions de fusion nucleaire  ou des corps qui ont ete dans cet etat a un stade de leur cycle de vie  comme les naines", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "neutrons1", "label": "neutrons1", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Par ailleurs  elle est le seul objet celeste connu", "label": "Par ailleurs  elle est le seul objet celeste connu", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "abriter la vie", "label": "abriter la vie", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Par dautres aspects  elle est", "label": "Par dautres aspects  elle est", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "dioxyde de carbone a plus", "label": "dioxyde de carbone a plus", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "et", "label": "et", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "issue des calottes polaires", "label": "issue des calottes polaires", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "une etude detaillee notamment de sa topographie  son histoire geologique  son champ magnetique", "label": "une etude detaillee notamment de sa topographie  son histoire geologique  son champ magnetique", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "des", "label": "des", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "dhydrocarbures", "label": "dhydrocarbures", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Autour de lui gravitent de nombreux objets", "label": "Autour de lui gravitent de nombreux objets", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "et cometes  notamment dans la ceinture dasteroides et la ceinture de Kuiper ", "label": "et cometes  notamment dans la ceinture dasteroides et la ceinture de Kuiper ", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "est", "label": "est", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "92 fois superieure a celle de la Terre", "label": "92 fois superieure a celle de la Terre", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Toutes ces speculations sont", "label": "Toutes ces speculations sont", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "les sondes spatiales qui etudient Mars  des 1965  Mariner 4 permet de decouvrir une planete depourvue de champ magnetique global  a la surface craterisee rappelant celle de la Lune  et une atmosphere tenue", "label": "les sondes spatiales qui etudient Mars  des 1965  Mariner 4 permet de decouvrir une planete depourvue de champ magnetique global  a la surface craterisee rappelant celle de la Lune  et une atmosphere tenue", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Dix", "label": "Dix", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "1972", "label": "1972", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "dorigine", "label": "dorigine", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "et climatique telles que des volcans  des rifts  des vallees  des mesas  des champs de dunes et des calottes polaires", "label": "et climatique telles que des volcans  des rifts  des vallees  des mesas  des champs de dunes et des calottes polaires", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "La plupart des etoiles", "label": "La plupart des etoiles", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "par des mecanismes de fusion nucleaire comme le cycle carbone  azote  oxygene ou la chaine proton  proton", "label": "par des mecanismes de fusion nucleaire comme le cycle carbone  azote  oxygene ou la chaine proton  proton", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "45  de sa surface", "label": "45  de sa surface", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "et decouvre lexistence de son champ magnetique", "label": "et decouvre lexistence de son champ magnetique", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Contrairement au stereotype dun vieil astronome regardant a travers son petit telescope durant toute la nuit  il est tres rare quun astronome professionnel moderne", "label": "Contrairement au stereotype dun vieil astronome regardant a travers son petit telescope durant toute la nuit  il est tres rare quun astronome professionnel moderne", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "un oculaire sur un grand telescope", "label": "un oculaire sur un grand telescope", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Depuis lors  Mars fait lobjet de programmes dexploration plus ambitieux que", "label": "Depuis lors  Mars fait lobjet de programmes dexploration plus ambitieux que", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "celui de notre planete", "label": "celui de notre planete", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "opposition aux", "label": "opposition aux", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "artificiels", "label": "artificiels", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "gravitationnelle avec son satellite cree les marees", "label": "gravitationnelle avec son satellite cree les marees", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "son axe de rotation et reduit graduellement sa vitesse de rotation", "label": "son axe de rotation et reduit graduellement sa vitesse de rotation", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Terre sest", "label": "Terre sest", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "il y", "label": "il y", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Reciproquement  elle possede une face cachee  qui presente moins de mers mais beaucoup plus de crateres", "label": "Reciproquement  elle possede une face cachee  qui presente moins de mers mais beaucoup plus de crateres", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "Pole Sud  Aitken  le plus grand du satellite et lun des plus grands du Systeme solaire par son diametre de 2 500 km", "label": "Pole Sud  Aitken  le plus grand du satellite et lun des plus grands du Systeme solaire par son diametre de 2 500 km", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "et ses", "label": "et ses", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "autour du Soleil  donnant limpression quelle  roule  sur son orbite  du moins a un", "label": "autour du Soleil  donnant limpression quelle  roule  sur son orbite  du moins a un", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Venus a ete un objectif privilegie", "label": "Venus a ete un objectif privilegie", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "interplanetaires du fait de son faible eloignement de la Terre", "label": "interplanetaires du fait de son faible eloignement de la Terre", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "jovienne est par ailleurs une unite utilisee", "label": "jovienne est par ailleurs une unite utilisee", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "que les naines brunes", "label": "que les naines brunes", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "lunaire", "label": "lunaire", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "38 cm par an", "label": "38 cm par an", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Ganymede est notamment le plus grand satellite naturel du Systeme solaire", "label": "Ganymede est notamment le plus grand satellite naturel du Systeme solaire", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "la taille depasse celle de Mercure", "label": "la taille depasse celle de Mercure", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "qui", "label": "qui", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "la Terre", "label": "la Terre", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "par les reactions de fusion nucleaire  qui", "label": "par les reactions de fusion nucleaire  qui", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "contraire a dilater lastre", "label": "contraire a dilater lastre", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "de nombreux objets", "label": "de nombreux objets", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "troyens de Jupiter qui sont pres de 10 000 a etre stabilises sur son orbite", "label": "troyens de Jupiter qui sont pres de 10 000 a etre stabilises sur son orbite", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Bien quelle soit visible a lil nu  son caractere planetaire nest alors pas", "label": "Bien quelle soit visible a lil nu  son caractere planetaire nest alors pas", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "sphere celeste", "label": "sphere celeste", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "et a ete la premiere planete", "label": "et a ete la premiere planete", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "lHomme ait trace les mouvements  des le deuxieme millenaire avant notre ere", "label": "lHomme ait trace les mouvements  des le deuxieme millenaire avant notre ere", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Cela", "label": "Cela", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "substellaires", "label": "substellaires", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "que des telescopes publics et des planetariums afin dencourager linteret", "label": "que des telescopes publics et des planetariums afin dencourager linteret", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "ce domaine", "label": "ce domaine", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Letymologie du terme astronomie vient du grec    et   ce qui", "label": "Letymologie du terme astronomie vient du grec    et   ce qui", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "loi des astres", "label": "loi des astres", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "ce qui", "label": "ce qui", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "a une excentricite orbitale de 02  plus de douze fois superieure a celle de la Terre  et de loin la plus elevee pour une planete du Systeme solaire", "label": "a une excentricite orbitale de 02  plus de douze fois superieure a celle de la Terre  et de loin la plus elevee pour une planete du Systeme solaire", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "William Herschel lobserve", "label": "William Herschel lobserve", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "quil sagit dune planete et non dune comete est faite pendant les mois qui suivent", "label": "quil sagit dune planete et non dune comete est faite pendant les mois qui suivent", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "par des mers lunaires", "label": "par des mers lunaires", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "terres claires", "label": "terres claires", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "planete est ensuite exploree a plusieurs", "label": "planete est ensuite exploree a plusieurs", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "sondes du programme Pioneer et du programme Voyager jusquen 1979", "label": "sondes du programme Pioneer et du programme Voyager jusquen 1979", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Durant plus dune decennie  elle est notamment etudiee par", "label": "Durant plus dune decennie  elle est notamment etudiee par", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "programmes Luna et Apollo  respectivement sovietique et americain", "label": "programmes Luna et Apollo  respectivement sovietique et americain", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Les astronomes professionnels sont des personnes instruites qui ont generalement un doctorat en physique ou en astronomie et sont", "label": "Les astronomes professionnels sont des personnes instruites qui ont generalement un doctorat en physique ou en astronomie et sont", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "employees comme chercheurs dans des universites", "label": "employees comme chercheurs dans des universites", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "La vie", "label": "La vie", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "apparue dans les oceans il y a au moins 35 milliards dannees  ce qui", "label": "apparue dans les oceans il y a au moins 35 milliards dannees  ce qui", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "il lui faut plus de temps", "label": "il lui faut plus de temps", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "tourner autour de son axe que toute autre planete du Systeme solaire", "label": "tourner autour de son axe que toute autre planete du Systeme solaire", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "ces saisons", "label": "ces saisons", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "toutefois marquees par une excentricite orbitale cinq fois et demie plus elevee que celle de la Terre  dou une asymetrie saisonniere sensiblement plus prononcee entre les deux hemispheres", "label": "toutefois marquees par une excentricite orbitale cinq fois et demie plus elevee que celle de la Terre  dou une asymetrie saisonniere sensiblement plus prononcee entre les deux hemispheres", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Cette absence", "label": "Cette absence", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "fond des crateres polaires  la ou les rayons du Soleil ne parviennent jamais  jusqua 700 K  427  C  au point subsolaire au perihelie", "label": "fond des crateres polaires  la ou les rayons du Soleil ne parviennent jamais  jusqua 700 K  427  C  au point subsolaire au perihelie", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Mars", "label": "Mars", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "surnommee  la planete rouge  en raison de cette couleur particuliere", "label": "surnommee  la planete rouge  en raison de cette couleur particuliere", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "De", "label": "De", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "la Lune", "label": "la Lune", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "dautres la possibilite de mieux faire avancer les connaissances au niveau de la comprehension de lunivers celeste", "label": "dautres la possibilite de mieux faire avancer les connaissances au niveau de la comprehension de lunivers celeste", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Sa masse de lordre de 2   1030 kg est courante", "label": "Sa masse de lordre de 2   1030 kg est courante", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "ce genre detoiles", "label": "ce genre detoiles", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "les premiers objets decouverts", "label": "les premiers objets decouverts", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "la premiere fois en 1610 par Galilee au moyen de sa lunette astronomique", "label": "la premiere fois en 1610 par Galilee au moyen de sa lunette astronomique", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Celles  ci sont entre autres utilisees", "label": "Celles  ci sont entre autres utilisees", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "pose", "label": "pose", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "lapparition des saisons", "label": "lapparition des saisons", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "sous forme de petites", "label": "sous forme de petites", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "que des glissements de terrain  sans doute des geysers de dioxyde de carbone dans les regions polaires  peut  etre des seismes", "label": "que des glissements de terrain  sans doute des geysers de dioxyde de carbone dans les regions polaires  peut  etre des seismes", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Elle", "label": "Elle", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "et les poetes", "label": "et les poetes", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Le Soleil est letoile de type naine jaune du Systeme solaire  qui se situe dans le bras dOrion  a environ 8 kpc  26 100 al  du centre", "label": "Le Soleil est letoile de type naine jaune du Systeme solaire  qui se situe dans le bras dOrion  a environ 8 kpc  26 100 al  du centre", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "de la galaxie Voie lactee", "label": "de la galaxie Voie lactee", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Son", "label": "Son", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "une temperature minimale de 49 K  224  C  a la tropopause  et presente une structure nuageuse en couches", "label": "une temperature minimale de 49 K  224  C  a la tropopause  et presente une structure nuageuse en couches", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "sont", "label": "sont", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "dans les annees 2020", "label": "dans les annees 2020", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "une activite meteorologique", "label": "une activite meteorologique", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "2007", "label": "2007", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "et des tempetes", "label": "et des tempetes", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "vents violents atteignent", "label": "vents violents atteignent", "shape": "dot", "size": 30}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": "hautement reflechissants", "label": "pour", "title": "pour", "to": "visible  empechant lobservation visuelle de sa surface depuis lespace"}, {"arrows": "to", "from": "temps normal  il designe les satellites naturels des planetes", "label": "planete", "title": "planete", "to": "naines et petits corps"}, {"arrows": "to", "from": "Le terme  astre  est proche  mais est rarement utilise en astronomie", "label": "pour", "title": "pour", "to": "ou les nebuleuses"}, {"arrows": "to", "from": "h le long de leurs", "label": "frontiere", "title": "frontiere", "to": "interactives"}, {"arrows": "to", "from": "se", "label": "meet", "title": "meet", "to": "mars"}, {"arrows": "to", "from": "Lastronomie est peut  etre la plus ancienne des sciences  comme semblent lindiquer nombre de decouvertes", "label": "archeologique", "title": "archeologique", "to": "datant de lage du bronze et du Neolithique"}, {"arrows": "to", "from": "par reactions de fusion nucleaire  ou des corps qui ont ete dans cet etat a un stade de leur cycle de vie  comme les naines", "label": "blanch", "title": "blanch", "to": "neutrons1"}, {"arrows": "to", "from": "Par ailleurs  elle est le seul objet celeste connu", "label": "pour", "title": "pour", "to": "abriter la vie"}, {"arrows": "to", "from": "Par dautres aspects  elle est", "label": "radicalement", "title": "radicalement", "to": "dioxyde de carbone a plus"}, {"arrows": "to", "from": "et", "label": "astronomique", "title": "astronomique", "to": "issue des calottes polaires"}, {"arrows": "to", "from": "et", "label": "realise", "title": "realise", "to": "une etude detaillee notamment de sa topographie  son histoire geologique  son champ magnetique"}, {"arrows": "to", "from": "des", "label": "trace", "title": "trace", "to": "dhydrocarbures"}, {"arrows": "to", "from": "Autour de lui gravitent de nombreux objets", "label": "do", "title": "do", "to": "et cometes  notamment dans la ceinture dasteroides et la ceinture de Kuiper "}, {"arrows": "to", "from": "est", "label": "ainsi", "title": "ainsi", "to": "92 fois superieure a celle de la Terre"}, {"arrows": "to", "from": "Toutes ces speculations sont", "label": "balayees", "title": "balayees", "to": "les sondes spatiales qui etudient Mars  des 1965  Mariner 4 permet de decouvrir une planete depourvue de champ magnetique global  a la surface craterisee rappelant celle de la Lune  et une atmosphere tenue"}, {"arrows": "to", "from": "Dix", "label": "autre", "title": "autre", "to": "1972"}, {"arrows": "to", "from": "dorigine", "label": "se", "title": "se", "to": "et climatique telles que des volcans  des rifts  des vallees  des mesas  des champs de dunes et des calottes polaires"}, {"arrows": "to", "from": "La plupart des etoiles", "label": "situent", "title": "situent", "to": "par des mecanismes de fusion nucleaire comme le cycle carbone  azote  oxygene ou la chaine proton  proton"}, {"arrows": "to", "from": "45  de sa surface", "label": "reprise", "title": "reprise", "to": "et decouvre lexistence de son champ magnetique"}, {"arrows": "to", "from": "Contrairement au stereotype dun vieil astronome regardant a travers son petit telescope durant toute la nuit  il est tres rare quun astronome professionnel moderne", "label": "utilise", "title": "utilise", "to": "un oculaire sur un grand telescope"}, {"arrows": "to", "from": "Depuis lors  Mars fait lobjet de programmes dexploration plus ambitieux que", "label": "pour", "title": "pour", "to": "celui de notre planete"}, {"arrows": "to", "from": "opposition aux", "label": "satellite", "title": "satellite", "to": "artificiels"}, {"arrows": "to", "from": "gravitationnelle avec son satellite cree les marees", "label": "stabilise", "title": "stabilise", "to": "son axe de rotation et reduit graduellement sa vitesse de rotation"}, {"arrows": "to", "from": "Terre sest", "label": "formee", "title": "formee", "to": "il y"}, {"arrows": "to", "from": "Reciproquement  elle possede une face cachee  qui presente moins de mers mais beaucoup plus de crateres", "label": "do", "title": "do", "to": "Pole Sud  Aitken  le plus grand du satellite et lun des plus grands du Systeme solaire par son diametre de 2 500 km"}, {"arrows": "to", "from": "et ses", "label": "plan", "title": "plan", "to": "autour du Soleil  donnant limpression quelle  roule  sur son orbite  du moins a un"}, {"arrows": "to", "from": "Venus a ete un objectif privilegie", "label": "pour", "title": "pour", "to": "interplanetaires du fait de son faible eloignement de la Terre"}, {"arrows": "to", "from": "jovienne est par ailleurs une unite utilisee", "label": "masse", "title": "masse", "to": "que les naines brunes"}, {"arrows": "to", "from": "lunaire", "label": "denviron", "title": "denviron", "to": "38 cm par an"}, {"arrows": "to", "from": "Ganymede est notamment le plus grand satellite naturel du Systeme solaire", "label": "do", "title": "do", "to": "la taille depasse celle de Mercure"}, {"arrows": "to", "from": "qui", "label": "representerait", "title": "representerait", "to": "la Terre"}, {"arrows": "to", "from": "par les reactions de fusion nucleaire  qui", "label": "tend", "title": "tend", "to": "contraire a dilater lastre"}, {"arrows": "to", "from": "de nombreux objets", "label": "les", "title": "les", "to": "troyens de Jupiter qui sont pres de 10 000 a etre stabilises sur son orbite"}, {"arrows": "to", "from": "Bien quelle soit visible a lil nu  son caractere planetaire nest alors pas", "label": "identifie", "title": "identifie", "to": "sphere celeste"}, {"arrows": "to", "from": "et a ete la premiere planete", "label": "astronomique", "title": "astronomique", "to": "lHomme ait trace les mouvements  des le deuxieme millenaire avant notre ere"}, {"arrows": "to", "from": "Cela", "label": "signifie", "title": "signifie", "to": "substellaires"}, {"arrows": "to", "from": "que des telescopes publics et des planetariums afin dencourager linteret", "label": "tel", "title": "tel", "to": "ce domaine"}, {"arrows": "to", "from": "Letymologie du terme astronomie vient du grec    et   ce qui", "label": "signifie", "title": "signifie", "to": "loi des astres"}, {"arrows": "to", "from": "ce qui", "label": "correspond", "title": "correspond", "to": "a une excentricite orbitale de 02  plus de douze fois superieure a celle de la Terre  et de loin la plus elevee pour une planete du Systeme solaire"}, {"arrows": "to", "from": "William Herschel lobserve", "label": "pour", "title": "pour", "to": "quil sagit dune planete et non dune comete est faite pendant les mois qui suivent"}, {"arrows": "to", "from": "par des mers lunaires", "label": "volcanique", "title": "volcanique", "to": "terres claires"}, {"arrows": "to", "from": "planete est ensuite exploree a plusieurs", "label": "reprise", "title": "reprise", "to": "sondes du programme Pioneer et du programme Voyager jusquen 1979"}, {"arrows": "to", "from": "Durant plus dune decennie  elle est notamment etudiee par", "label": "le", "title": "le", "to": "programmes Luna et Apollo  respectivement sovietique et americain"}, {"arrows": "to", "from": "Les astronomes professionnels sont des personnes instruites qui ont generalement un doctorat en physique ou en astronomie et sont", "label": "souvent", "title": "souvent", "to": "employees comme chercheurs dans des universites"}, {"arrows": "to", "from": "La vie", "label": "serait", "title": "serait", "to": "apparue dans les oceans il y a au moins 35 milliards dannees  ce qui"}, {"arrows": "to", "from": "il lui faut plus de temps", "label": "pour", "title": "pour", "to": "tourner autour de son axe que toute autre planete du Systeme solaire"}, {"arrows": "to", "from": "ces saisons", "label": "sont", "title": "sont", "to": "toutefois marquees par une excentricite orbitale cinq fois et demie plus elevee que celle de la Terre  dou une asymetrie saisonniere sensiblement plus prononcee entre les deux hemispheres"}, {"arrows": "to", "from": "Cette absence", "label": "datmosphere", "title": "datmosphere", "to": "fond des crateres polaires  la ou les rayons du Soleil ne parviennent jamais  jusqua 700 K  427  C  au point subsolaire au perihelie"}, {"arrows": "to", "from": "Mars", "label": "souvent", "title": "souvent", "to": "surnommee  la planete rouge  en raison de cette couleur particuliere"}, {"arrows": "to", "from": "De", "label": "tel", "title": "tel", "to": "la Lune"}, {"arrows": "to", "from": "qui", "label": "pour", "title": "pour", "to": "dautres la possibilite de mieux faire avancer les connaissances au niveau de la comprehension de lunivers celeste"}, {"arrows": "to", "from": "Sa masse de lordre de 2   1030 kg est courante", "label": "pour", "title": "pour", "to": "ce genre detoiles"}, {"arrows": "to", "from": "les premiers objets decouverts", "label": "comprend", "title": "comprend", "to": "la premiere fois en 1610 par Galilee au moyen de sa lunette astronomique"}, {"arrows": "to", "from": "Celles  ci sont entre autres utilisees", "label": "pour", "title": "pour", "to": "pose"}, {"arrows": "to", "from": "ce qui", "label": "cause", "title": "cause", "to": "lapparition des saisons"}, {"arrows": "to", "from": "sous forme de petites", "label": "tel", "title": "tel", "to": "que des glissements de terrain  sans doute des geysers de dioxyde de carbone dans les regions polaires  peut  etre des seismes"}, {"arrows": "to", "from": "Elle", "label": "nombreuse", "title": "nombreuse", "to": "et les poetes"}, {"arrows": "to", "from": "Le Soleil est letoile de type naine jaune du Systeme solaire  qui se situe dans le bras dOrion  a environ 8 kpc  26 100 al  du centre", "label": "galactique", "title": "galactique", "to": "de la galaxie Voie lactee"}, {"arrows": "to", "from": "Son", "label": "atmosphere", "title": "atmosphere", "to": "une temperature minimale de 49 K  224  C  a la tropopause  et presente une structure nuageuse en couches"}, {"arrows": "to", "from": "sont", "label": "envisagees", "title": "envisagees", "to": "dans les annees 2020"}, {"arrows": "to", "from": "une activite meteorologique", "label": "revelant", "title": "revelant", "to": "2007"}, {"arrows": "to", "from": "et des tempetes", "label": "atmosphere", "title": "atmosphere", "to": "vents violents atteignent"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"physics": {"enabled": true, "solver": "forceAtlas2Based", "forceAtlas2Based": {"gravitationalConstant": -120, "centralGravity": 0.01, "springLength": 120, "springConstant": 0.08}, "stabilization": {"iterations": 200}}, "nodes": {"font": {"size": 20, "face": "arial"}, "shape": "dot"}, "edges": {"font": {"size": 14}}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

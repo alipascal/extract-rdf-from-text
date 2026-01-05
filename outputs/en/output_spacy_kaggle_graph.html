@@ -1,0 +1,222 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 100vh;
+                 background-color: #1e1e1e;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 100vh;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#4CAF50", "font": {"color": "white"}, "id": "deficient accumulation of appropriately oligomerized SP  D", "label": "deficient accumulation of appropriately oligomerized SP  D", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "human lung diseases", "label": "human lung diseases", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "More than three  quarters of patients  775  ", "label": "More than three  quarters of patients  775  ", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "comorbidities", "label": "comorbidities", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "PLI", "label": "PLI", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "study patients", "label": "study patients", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "vaccinia proteins A10L and L4R", "label": "vaccinia proteins A10L and L4R", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "vitro", "label": "vitro", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "critically ill patients", "label": "critically ill patients", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "haemoglobin", "label": "haemoglobin", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "UBA domain", "label": "UBA domain", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "that", "label": "that", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "recruitment of cellular proteins by hnRNP A1", "label": "recruitment of cellular proteins by hnRNP A1", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "MHV RNA synthesis", "label": "MHV RNA synthesis", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "This review", "label": "This review", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "lung disease", "label": "lung disease", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "We", "label": "We", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "vaccinia virus infection", "label": "vaccinia virus infection", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "It", "label": "It", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "fall  35 ", "label": "fall  35 ", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Nidovirus subgenomic mRNAs", "label": "Nidovirus subgenomic mRNAs", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "3 end", "label": "3 end", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Our findings", "label": "Our findings", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "viral RNA  dependent RNA synthesis", "label": "viral RNA  dependent RNA synthesis", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Hospitals", "label": "Hospitals", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "Health Level 7  HL7  message protocol", "label": "Health Level 7  HL7  message protocol", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "hnRNP A1", "label": "hnRNP A1", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "cytoplasmic RNA virus  mouse hepatitis virus  MHV ", "label": "cytoplasmic RNA virus  mouse hepatitis virus  MHV ", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "This retrospective chart review", "label": "This retrospective chart review", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "King Abdulaziz University Hospital  Jeddah  Saudi Arabia", "label": "King Abdulaziz University Hospital  Jeddah  Saudi Arabia", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "restrictive transfusion strategy", "label": "restrictive transfusion strategy", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "health care costs", "label": "health care costs", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "fast PCR method", "label": "fast PCR method", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "time", "label": "time", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "respiratory epithelial target cells", "label": "respiratory epithelial target cells", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "apoptosis response", "label": "apoptosis response", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "hnRNP A1 mutant", "label": "hnRNP A1 mutant", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "defective  interfering RNAs", "label": "defective  interfering RNAs", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "vaccinia infection", "label": "vaccinia infection", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "centrosomal microtubule nucleation efficiency", "label": "centrosomal microtubule nucleation efficiency", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "PCRbased methods", "label": "PCRbased methods", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "disease or illness", "label": "disease or illness", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "body TRS", "label": "body TRS", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "multiple functions", "label": "multiple functions", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "positive progress", "label": "positive progress", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "intensive care medicine", "label": "intensive care medicine", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "p62", "label": "p62", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "its UBA domain", "label": "its UBA domain", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "diseases", "label": "diseases", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "infection", "label": "infection", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "infants  325   and pre  school children  225  ", "label": "infants  325   and pre  school children  225  ", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "SP  D", "label": "SP  D", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "macrophages  neutrophils  and lymphocytes", "label": "macrophages  neutrophils  and lymphocytes", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "that isolation of the virus", "label": "that isolation of the virus", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "lungs", "label": "lungs", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "it", "label": "it", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "many laboratory and clinical studies  including a recent randomized controlled trial  RCT ", "label": "many laboratory and clinical studies  including a recent randomized controlled trial  RCT ", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "critically ill patient", "label": "critically ill patient", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "Alzheimer s disease", "label": "Alzheimer s disease", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Further studies with vaccinia", "label": "Further studies with vaccinia", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "centrosome function", "label": "centrosome function", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "lung", "label": "lung", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "3  125  ", "label": "3  125  ", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "underlying comorbidities", "label": "underlying comorbidities", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "SP  D  a collagenous calcium  dependent lectin  or collectin ", "label": "SP  D  a collagenous calcium  dependent lectin  or collectin ", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "various complex organic antigens", "label": "various complex organic antigens", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "transcriptional upregulation of HO1", "label": "transcriptional upregulation of HO1", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "hypoxia  bacterial lipopolysaccharide  and reactive oxygen  nitrogen species", "label": "hypoxia  bacterial lipopolysaccharide  and reactive oxygen  nitrogen species", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "copy  choice RNA recombination", "label": "copy  choice RNA recombination", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "33  825   of whom", "label": "33  825   of whom", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "admission", "label": "admission", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Some fatal emerging viral infections", "label": "Some fatal emerging viral infections", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "serious public health issues", "label": "serious public health issues", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "human immunodeficiency virus type 1", "label": "human immunodeficiency virus type 1", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "we", "label": "we", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "proteome  wide perspective", "label": "proteome  wide perspective", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "temporal and spatial analyses", "label": "temporal and spatial analyses", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "discontinuous step", "label": "discontinuous step", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "minus strand synthesis", "label": "minus strand synthesis", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "algorithms", "label": "algorithms", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "syndrome counts", "label": "syndrome counts", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "abnormal oxidant metabolism andor increased metalloproteinase expression", "label": "abnormal oxidant metabolism andor increased metalloproteinase expression", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "emphysema", "label": "emphysema", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "various lines of evidence", "label": "various lines of evidence", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "several disease models", "label": "several disease models", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "all", "label": "all", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "acyclovir", "label": "acyclovir", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "efficiency of the frameshift event", "label": "efficiency of the frameshift event", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "autoregulatory feedback loop", "label": "autoregulatory feedback loop", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Ethical issues", "label": "Ethical issues", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "attention", "label": "attention", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "This", "label": "This", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "newly assembled virus particles", "label": "newly assembled virus particles", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "microtubule and dynein  dynactin complex  dependent fashion", "label": "microtubule and dynein  dynactin complex  dependent fashion", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "HO1", "label": "HO1", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "its enzymatic reaction products", "label": "its enzymatic reaction products", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "expression of mammalian antizyme genes", "label": "expression of mammalian antizyme genes", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "specific 1 translational frameshift", "label": "specific 1 translational frameshift", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "more complete and systematic manner", "label": "more complete and systematic manner", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "RODS", "label": "RODS", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "daily basis", "label": "daily basis", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "who", "label": "who", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "other comorbidities", "label": "other comorbidities", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "administration of CO at low concentrations", "label": "administration of CO at low concentrations", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "function", "label": "function", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Surfactant protein  D  SP  D ", "label": "Surfactant protein  D  SP  D ", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "yeast antizyme gene and several newly identified antizyme genes from different nematodes", "label": "yeast antizyme gene and several newly identified antizyme genes from different nematodes", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "their expression", "label": "their expression", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "growth  inflammation  and apoptosis", "label": "growth  inflammation  and apoptosis", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "Bayesian classifiers", "label": "Bayesian classifiers", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "transplantation", "label": "transplantation", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "similar mechanism", "label": "similar mechanism", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "fission yeast Schizosaccharomyces pombe", "label": "fission yeast Schizosaccharomyces pombe", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Chronic  low  level  exogenous exposure to CO from cigarette smoking", "label": "Chronic  low  level  exogenous exposure to CO from cigarette smoking", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "pulmonary medicine", "label": "pulmonary medicine", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Microarray technology", "label": "Microarray technology", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "molecular medicine", "label": "molecular medicine", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "only 25 ", "label": "only 25 ", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "bronchial breathing", "label": "bronchial breathing", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "HO1 and its constitutively expressed isozyme  heme oxygenase2", "label": "HO1 and its constitutively expressed isozyme  heme oxygenase2", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "its metabolites  bilirubin IX  ferrous iron  and carbon monoxide  CO ", "label": "its metabolites  bilirubin IX  ferrous iron  and carbon monoxide  CO ", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "This report", "label": "This report", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "disease outbreaks", "label": "disease outbreaks", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "Regulation of ornithine decarboxylase in vertebrates", "label": "Regulation of ornithine decarboxylase in vertebrates", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "protein antizyme", "label": "protein antizyme", "shape": "dot", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "alternative mechanisms involving the phagocyte  derived heme proteins myeloperoxidase and eosinophil peroxidase", "label": "alternative mechanisms involving the phagocyte  derived heme proteins myeloperoxidase and eosinophil peroxidase", "shape": "dot", "size": 30}, {"color": "#2196F3", "font": {"color": "white"}, "id": "inflammation", "label": "inflammation", "shape": "dot", "size": 30}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": "deficient accumulation of appropriately oligomerized SP  D", "label": "increase", "title": "increase", "to": "human lung diseases"}, {"arrows": "to", "from": "More than three  quarters of patients  775  ", "label": "have", "title": "have", "to": "comorbidities"}, {"arrows": "to", "from": "PLI", "label": "range", "title": "range", "to": "study patients"}, {"arrows": "to", "from": "vaccinia proteins A10L and L4R", "label": "report", "title": "report", "to": "vitro"}, {"arrows": "to", "from": "critically ill patients", "label": "suggest", "title": "suggest", "to": "haemoglobin"}, {"arrows": "to", "from": "UBA domain", "label": "provide", "title": "provide", "to": "that"}, {"arrows": "to", "from": "recruitment of cellular proteins by hnRNP A1", "label": "fail", "title": "fail", "to": "MHV RNA synthesis"}, {"arrows": "to", "from": "This review", "label": "focus", "title": "focus", "to": "lung disease"}, {"arrows": "to", "from": "We", "label": "examine", "title": "examine", "to": "vaccinia virus infection"}, {"arrows": "to", "from": "It", "label": "occur", "title": "occur", "to": "fall  35 "}, {"arrows": "to", "from": "Nidovirus subgenomic mRNAs", "label": "contain", "title": "contain", "to": "3 end"}, {"arrows": "to", "from": "Our findings", "label": "establish", "title": "establish", "to": "viral RNA  dependent RNA synthesis"}, {"arrows": "to", "from": "Hospitals", "label": "send", "title": "send", "to": "Health Level 7  HL7  message protocol"}, {"arrows": "to", "from": "hnRNP A1", "label": "demonstrate", "title": "demonstrate", "to": "cytoplasmic RNA virus  mouse hepatitis virus  MHV "}, {"arrows": "to", "from": "This retrospective chart review", "label": "describe", "title": "describe", "to": "King Abdulaziz University Hospital  Jeddah  Saudi Arabia"}, {"arrows": "to", "from": "restrictive transfusion strategy", "label": "reduce", "title": "reduce", "to": "health care costs"}, {"arrows": "to", "from": "fast PCR method", "label": "suffer", "title": "suffer", "to": "time"}, {"arrows": "to", "from": "respiratory epithelial target cells", "label": "respond", "title": "respond", "to": "apoptosis response"}, {"arrows": "to", "from": "hnRNP A1 mutant", "label": "cause", "title": "cause", "to": "defective  interfering RNAs"}, {"arrows": "to", "from": "vaccinia infection", "label": "result", "title": "result", "to": "centrosomal microtubule nucleation efficiency"}, {"arrows": "to", "from": "PCRbased methods", "label": "employ", "title": "employ", "to": "disease or illness"}, {"arrows": "to", "from": "body TRS", "label": "fulfil", "title": "fulfil", "to": "multiple functions"}, {"arrows": "to", "from": "positive progress", "label": "mark", "title": "mark", "to": "intensive care medicine"}, {"arrows": "to", "from": "p62", "label": "play", "title": "play", "to": "its UBA domain"}, {"arrows": "to", "from": "that", "label": "be", "title": "be", "to": "diseases"}, {"arrows": "to", "from": "infection", "label": "affect", "title": "affect", "to": "infants  325   and pre  school children  225  "}, {"arrows": "to", "from": "SP  D", "label": "interact", "title": "interact", "to": "macrophages  neutrophils  and lymphocytes"}, {"arrows": "to", "from": "that isolation of the virus", "label": "argue", "title": "argue", "to": "lungs"}, {"arrows": "to", "from": "that", "label": "accelerate", "title": "accelerate", "to": "it"}, {"arrows": "to", "from": "many laboratory and clinical studies  including a recent randomized controlled trial  RCT ", "label": "establish", "title": "establish", "to": "critically ill patient"}, {"arrows": "to", "from": "that", "label": "identify", "title": "identify", "to": "Alzheimer s disease"}, {"arrows": "to", "from": "Further studies with vaccinia", "label": "provide", "title": "provide", "to": "centrosome function"}, {"arrows": "to", "from": "it", "label": "focus", "title": "focus", "to": "lung"}, {"arrows": "to", "from": "3  125  ", "label": "have", "title": "have", "to": "underlying comorbidities"}, {"arrows": "to", "from": "SP  D  a collagenous calcium  dependent lectin  or collectin ", "label": "bind", "title": "bind", "to": "various complex organic antigens"}, {"arrows": "to", "from": "transcriptional upregulation of HO1", "label": "respond", "title": "respond", "to": "hypoxia  bacterial lipopolysaccharide  and reactive oxygen  nitrogen species"}, {"arrows": "to", "from": "that", "label": "involve", "title": "involve", "to": "copy  choice RNA recombination"}, {"arrows": "to", "from": "33  825   of whom", "label": "identify", "title": "identify", "to": "admission"}, {"arrows": "to", "from": "Some fatal emerging viral infections", "label": "become", "title": "become", "to": "serious public health issues"}, {"arrows": "to", "from": "that", "label": "describe", "title": "describe", "to": "human immunodeficiency virus type 1"}, {"arrows": "to", "from": "we", "label": "present", "title": "present", "to": "body TRS"}, {"arrows": "to", "from": "we", "label": "demonstrate", "title": "demonstrate", "to": "proteome  wide perspective"}, {"arrows": "to", "from": "that", "label": "have", "title": "have", "to": "temporal and spatial analyses"}, {"arrows": "to", "from": "discontinuous step", "label": "suggest", "title": "suggest", "to": "minus strand synthesis"}, {"arrows": "to", "from": "algorithms", "label": "store", "title": "store", "to": "syndrome counts"}, {"arrows": "to", "from": "abnormal oxidant metabolism andor increased metalloproteinase expression", "label": "alter", "title": "alter", "to": "emphysema"}, {"arrows": "to", "from": "various lines of evidence", "label": "support", "title": "support", "to": "several disease models"}, {"arrows": "to", "from": "all", "label": "receive", "title": "receive", "to": "acyclovir"}, {"arrows": "to", "from": "efficiency of the frameshift event", "label": "reflect", "title": "reflect", "to": "autoregulatory feedback loop"}, {"arrows": "to", "from": "Ethical issues", "label": "receive", "title": "receive", "to": "attention"}, {"arrows": "to", "from": "This", "label": "represent", "title": "represent", "to": "centrosome function"}, {"arrows": "to", "from": "newly assembled virus particles", "label": "find", "title": "find", "to": "microtubule and dynein  dynactin complex  dependent fashion"}, {"arrows": "to", "from": "HO1", "label": "involve", "title": "involve", "to": "its enzymatic reaction products"}, {"arrows": "to", "from": "expression of mammalian antizyme genes", "label": "require", "title": "require", "to": "specific 1 translational frameshift"}, {"arrows": "to", "from": "SP  D", "label": "bind", "title": "bind", "to": "vitro"}, {"arrows": "to", "from": "that", "label": "review", "title": "review", "to": "more complete and systematic manner"}, {"arrows": "to", "from": "RODS", "label": "process", "title": "process", "to": "daily basis"}, {"arrows": "to", "from": "who", "label": "have", "title": "have", "to": "other comorbidities"}, {"arrows": "to", "from": "administration of CO at low concentrations", "label": "substitute", "title": "substitute", "to": "function"}, {"arrows": "to", "from": "Surfactant protein  D  SP  D ", "label": "participate", "title": "participate", "to": "lung"}, {"arrows": "to", "from": "yeast antizyme gene and several newly identified antizyme genes from different nematodes", "label": "require", "title": "require", "to": "their expression"}, {"arrows": "to", "from": "HO1", "label": "influence", "title": "influence", "to": "growth  inflammation  and apoptosis"}, {"arrows": "to", "from": "RODS", "label": "classify", "title": "classify", "to": "Bayesian classifiers"}, {"arrows": "to", "from": "HO1", "label": "limit", "title": "limit", "to": "transplantation"}, {"arrows": "to", "from": "similar mechanism", "label": "show", "title": "show", "to": "fission yeast Schizosaccharomyces pombe"}, {"arrows": "to", "from": "Chronic  low  level  exogenous exposure to CO from cigarette smoking", "label": "contribute", "title": "contribute", "to": "pulmonary medicine"}, {"arrows": "to", "from": "Microarray technology", "label": "solve", "title": "solve", "to": "molecular medicine"}, {"arrows": "to", "from": "only 25 ", "label": "have", "title": "have", "to": "bronchial breathing"}, {"arrows": "to", "from": "HO1 and its constitutively expressed isozyme  heme oxygenase2", "label": "catalyze", "title": "catalyze", "to": "its metabolites  bilirubin IX  ferrous iron  and carbon monoxide  CO "}, {"arrows": "to", "from": "This report", "label": "describe", "title": "describe", "to": "disease outbreaks"}, {"arrows": "to", "from": "Regulation of ornithine decarboxylase in vertebrates", "label": "involve", "title": "involve", "to": "protein antizyme"}, {"arrows": "to", "from": "alternative mechanisms involving the phagocyte  derived heme proteins myeloperoxidase and eosinophil peroxidase", "label": "presume", "title": "presume", "to": "inflammation"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"physics": {"enabled": true, "solver": "forceAtlas2Based", "forceAtlas2Based": {"gravitationalConstant": -120, "centralGravity": 0.01, "springLength": 120, "springConstant": 0.08}, "stabilization": {"iterations": 200}}, "nodes": {"font": {"size": 20, "face": "arial"}, "shape": "dot"}, "edges": {"font": {"size": 14}}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
