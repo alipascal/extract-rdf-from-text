@@ -4,6 +4,7 @@ Code Test - Inspirer de code /test1.py
 import argparse
 
 import re
+import time
 import unicodedata
 import webbrowser
 
@@ -95,10 +96,12 @@ if __name__ == '__main__':
     namefile = args.file
     outputfile = args.output
 
+    tps_start = time.time()
     print(f"¤ Exécution algorithme '{method}' {lang}")
     text = getFile(namefile)
     entities = ACTIONS[method](text, lang)
-    print(f"✓ Exécution algorithme '{method}' terminée")
+    tps_end = time.time()
+    print(f"✓ Exécution algorithme '{method}' terminée ({int(tps_end - tps_start)}s)")
 
     print(f"✓ {len(entities)} triplets générés")
     
@@ -114,8 +117,8 @@ if __name__ == '__main__':
     graph.serialize(destination=outputfile+".ttl", format="turtle")
     graph.serialize(destination=outputfile+".rdf", format="xml")
     print(f"✓ Fichiers créé : {outputfile}.ttl, {outputfile}.rdf")
-    # pour visualiser le graphe : https://www.ldf.fi/service/rdf-grapher
 
+    # Visualisation du graphe
     filerdf = f"{outputfile}.rdf"
     visualize_rdf(filerdf, f"{outputfile}_graph.html")
     webbrowser.open(f"{outputfile}_graph.html")

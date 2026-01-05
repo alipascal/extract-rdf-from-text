@@ -11,5 +11,9 @@ The meeting was held at the Élysée Palace. The two leaders discussed European 
 Marie Curie discovered polonium.
 Murder on the Orient Express is a novel.
 The novel was written by Agatha Christie.
-The patient is taking a medication.
+Pascal is taking a medication.
+Pascal has diabetes.
 The doctor prescribes a treatment.
+Agatha Christie wrote the novel Murder on the Orient Express.
+Google is located in California.
+Barack Obama was born in Hawaii.
