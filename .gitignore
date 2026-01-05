@@ -4,8 +4,4 @@ __pycache__
 /venv
 .env
 
-# output.*
-/outputs/astronomy
-/outputs/rdf ttl
-/outputs/semweb
 /outputs/vrac
