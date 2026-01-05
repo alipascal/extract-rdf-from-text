@@ -95,15 +95,17 @@ Le programme s’exécute depuis l’invite de commande.
 
 * `model` : le modèle à utiliser (`spacy`, `nltk`, `stanford`, `openai`)
 * `--file` : fichier d’entrée (par défaut `input.txt`)
-* `--lang` : langue du fichier d’entrée (`fr` ou `en`, par défaut `fr`)
+* `--lang` : langue du fichier d’entrée (`fr` ou `en`, par défaut `en`)
+* `--output` : nom file sortir (par défaut `output`)
 
 ```bash
-python main.py <model> --lang <fr/en> --file input.txt
+python main.py <model> --lang <fr/en> --file input.txt --output output
 ```
 
 Le programme génère :
 * un fichier `.rdf` au format XML
 * un fichier `.ttl` au format Turtle
+* un fichier `.html` pour la visualisation
 
 !!! Les modèles NLTK et Stanford CoreNLP traitent uniquement les textes en anglais.
 
