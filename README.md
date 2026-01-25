@@ -1,19 +1,48 @@
 # Text To RDF : Extraction Sémantique du Web 
 
-Projet universitaire - Sujet 2 :
+Projet universitaire (Sujet 2) :
 Extraction des entités à partir de texte et transformation en un graphe RDF
+
+<p align="center">
+  <img width="50%" alt="output_wikipedia_nltk_en" src="https://github.com/user-attachments/assets/3b0c7183-9731-4e95-b80a-7ab5c380cd62" />
+</p>
 
 Ce projet implémente différents modèles de NER (Named-Entity Recognition) et d'extraction de triplets RDF (sujet, prédicat, objet).
 
-4 modèles sont présentés : SpaCy, OpenAI (gpt-5-nano), NLTK, et Stanford CoreNLP.
+Quatres modèles sont présentés : 
+- SpaCy
+- OpenAI (gpt-5-nano)
+- NLTK
+- Stanford CoreNLP
 
 Ces modèles sont testés sur des textes bruts non structurés.
-Les corpus proviennent d'articles scientifiques, de comptes rendus médicaux, d'articles de presse et d'extraits de pages Wikipédia.
-
+Les corpus de textes proviennent d'articles scientifiques, de comptes rendus médicaux, d'articles de presse et d'extraits de pages Wikipédia.
 Toutes les sources sont référencées dans les fichiers correspondants.
 
+## Architecture
+
+<p align="center">
+  <img width="50%" alt="architecture" src="https://github.com/user-attachments/assets/cc4a989b-2262-4b6a-9cd6-f47266b727e3" />
+</p>
 
 ## Installation & Setup projet pour le développment
+
+### Dépendences
+
+* Python ≥ 3.11
+* Stanford CoreNLP ≥ 4.5.10
+* OpenAI API key
+
+### Setup
+
+Le programme requiert les packages Python suivants :
+- `rdflib` (==7.5.0) : Librairie pour manipuler et créer des graphes RDF
+- `pyvis` : Visualisation interactive de graphes
+- `nltk` (==3.9.2) : Toolkit de traitement du langage naturel
+- `spacy` (==3.8.11) : NLP avancé pour tokenisation, entités nommées, etc.
+- `openai` (==2.14.0) : Intégration des modèles OpenAI
+- `python-dotenv` (==1.2.1) : Chargement des variables d’environnement depuis un fichier .env
+- `numpy` (==2.4.0) : Librairie scientifique, utilisée ici pour supporter nltk
 
 Environement virtuel sur Windows :
 ```bash
