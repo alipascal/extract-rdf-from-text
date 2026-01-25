@@ -19,7 +19,20 @@ Ces modèles sont testés sur des textes bruts non structurés.
 Les corpus de textes proviennent d'articles scientifiques, de comptes rendus médicaux, d'articles de presse et d'extraits de pages Wikipédia.
 Toutes les sources sont référencées dans les fichiers correspondants.
 
-## Architecture
+## Features
+
+* {{texte}}
+* {{texte}}
+* {{texte}}
+* {{texte}}
+
+## How it works / Architecture
+
+Concrètement, la pipeline se décompose en plusieurs étapes :
+
+{{texte}}
+
+**Architecture générale :**
 
 <p align="center">
   <img width="50%" alt="architecture" src="https://github.com/user-attachments/assets/cc4a989b-2262-4b6a-9cd6-f47266b727e3" />
