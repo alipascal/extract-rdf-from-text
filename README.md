@@ -146,3 +146,17 @@ python main.py nltk --file mon_fichier.txt # NLTK sur un fichier spécifique
 python main.py openai # OpenAI
 ```
 
+## Auteurs
+
+[@hacjoseph](https://github.com/hacjoseph)
+
+[@imane-hashCode](https://github.com/imane-hashCode)
+
+[@alipascal](https://github.com/alipascal)
+
+
+## License
+
+Ce projet est sous licence MIT – une licence open source permissive qui permet l’utilisation, la modification et la distribution gratuites du logiciel.
+
+Pour plus de détails, voir la documentation [MIT License](https://opensource.org/licenses/MIT).
