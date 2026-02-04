@@ -21,16 +21,12 @@ Toutes les sources sont référencées dans les fichiers correspondants.
 
 ## Features
 
-* {{texte}}
-* {{texte}}
-* {{texte}}
-* {{texte}}
+* Prend en entrée un fichier contenant du texte brute (paragraphes, phrases simples...) et retourne un graphe RDF.
+* Visualisation du graphe à partir d'un fichier en html
+* Génère un fichier XML (.rdf) et un fichier turtle (.ttl) pour le graphe.
+* Traite du texte en anglais (et français pour les modèles d'OpenAI et SpaCy)
 
 ## How it works / Architecture
-
-Concrètement, la pipeline se décompose en plusieurs étapes :
-
-{{texte}}
 
 **Architecture générale :**
 
