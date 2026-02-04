@@ -34,9 +34,9 @@ Toutes les sources sont référencées dans les fichiers correspondants.
   <img width="50%" alt="architecture" src="https://github.com/user-attachments/assets/cc4a989b-2262-4b6a-9cd6-f47266b727e3" />
 </p>
 
-## Installation & Setup projet pour le développment
+## Installation & Setup projet pour le développement
 
-### Dépendences
+### Dépendances
 
 * Python ≥ 3.11
 * Stanford CoreNLP ≥ 4.5.10
